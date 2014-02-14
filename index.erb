@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+  <head>
+    <title><%= meta.title %></title>
+    <meta charset="utf-8">
+    <%#<meta name="viewport" content="width=1274, user-scalable=no">%>
+    <meta name="viewport" content="width=680, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/screen.css">
+    <link rel="stylesheet" href="css/pygments/<%= meta.pygments_style %>.css">
+    <% meta.css.each do |css| %>
+      <link rel="stylesheet" href="<%= css %>">
+    <% end %>
+  </head>
+  <body class="list">
+    <header class="caption">
+      <h1><%= meta.title %></h1>
+    </header>
+    <%# TODO: Fix count %>
+    <% slides_count = sections.map { |section| section.slides.count + 2 }.reduce(:+) - 2 || 0 %>
+    <% sections.each do |section| %>
+      <% if section.number > 0 %>
+        <div id="slide-<%= section.number %>-s" class="slide chapter" data-slides="<%= slides_count %>">
+          <div>
+            <h2><%= section.title %></h2>
+          </div>
+        </div>
+        <div id="slide-<%= section.number %>-toc" class="slide toc" data-slides="<%= slides_count %>">
+          <div>
+            <h1><%= section.title %></h1>
+            <h2>Inhalt</h2>
+
+            <ol>
+              <% section.slides.uniq { |slide| slide.extract_title }.each do |slide| %>
+                <li><%= slide.extract_title %></li>
+              <% end %>
+            </ol>
+          </div>
+          <footer>
+            <%# meta.author %>
+          </footer>
+        </div>
+      <% end %>
+      <% section.slides.each do |slide| %>
+        <div id="slide-<%= section.number %>-<%= slide.number %>" class="slide <%= slide.classes %>" data-slides="<%= slides_count %>">
+          <div>
+            <h1><%= section.title %></h1>
+            <% if slide.extract_title && !slide.extract_title.empty? %>
+              <h2><%= slide.extract_title %></h2>
+            <% end %>
+            <%= slide.html %>
+          </div>
+          <%#<footer>%>
+            <%# meta.author %>
+          <%#</footer>%>
+        </div>
+      <% end %>
+    <% end %>
+	<div class="progress"><div></div></div>
+    <% (theme.js + meta.js).each do |js| %>
+      <script src="<%= js %>"></script>
+    <% end %>
+  </body>
+</html>

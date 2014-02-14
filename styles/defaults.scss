@@ -1,0 +1,50 @@
+// Bright theme for Shower HTML presentation engine: github.com/shower/shower
+// Copyright © 2010–2013 Vadim Makeev, pepelsbey.net
+// Licensed under MIT license: github.com/shower/shower/wiki/MIT-License
+
+// Layout
+$width:1024px;  // Slide width, permanent in most cases
+$height:640px;  // Slide height, 640px for 16:10, 768px for 4:3
+$top:60px;     // Top padding above slide content
+$left:78px;    // Left slide content padding
+$right:96px;    // Right slide content padding
+$bottom:38px;    // Bottom slide content padding
+$break:1180px;  // Window width for small thumbnails to appear
+$ratio:'16x10'; // Available options: '16x10' or '4x3'
+
+// Colors
+
+$redLight:#E10019;
+$redDark:#96000F;
+$grayDark:#46413C;
+$grayLight:#AAA5A0;
+
+$bluegreenLight:#009682;
+$bluegreenDark:#006450;
+$blueLight:#4BBEE1;
+$blueDark: #327D91;
+$greenLight:#9BC328;
+$greenDark:#697D19;
+$purpleLight:#821350;
+$purpleDark:#560F32;
+$orangeLight:#FF8200;
+$orangeDark:#AA5500;
+
+$color:$grayDark;
+$colorCode:#E6E6E6;
+$gray:$grayDark;
+$borderColor:lightgray;
+$black1:#515151;
+$black2:darkgray;
+$linkColor:$blueDark;
+$listItemColor:$grayLight;
+
+// #52A2DF 1px
+$dot:'data:image/gif;base64,R0lGODdhAQABAPAAAFKi3wAAACH/C1hNUCBEYXRhWE1QAz94cAAsAAAAAAEAAQBAAgJEAQA7';
+
+// Mixins
+@mixin retina {
+	@media (-webkit-min-device-pixel-ratio:2), (min-resolution:192dpi) {
+		@content;
+		}
+	}

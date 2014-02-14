@@ -1,0 +1,15 @@
+/* Solarized Light
+http://ethanschoonover.com/solarized
+https://gist.github.com/nicolashery/5765395/raw/168ea6851298cfd1d5e062ae742e18657b1c7a72/solarized-light.css
+*/
+
+$base3:  #002b36;  // background
+$base2:  #073642;
+$base1:  #586e75;  // comments / secondary content
+$base0:  #657b83;
+$base00: #839496;
+$base01: #93a1a1;  // body text / default code / primary content
+$base02: #eee8d5;
+$base03: #fdf6e3;
+
+@import '_solarized';
