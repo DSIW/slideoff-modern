@@ -30,6 +30,7 @@ cat > presentation.json <<EOF
 {
   "title": "My first presentation",
   "theme": "modern",
+  "pygments_style": "github",
   "duration": 20,
   "sections": {
     "main": "Title of my main section"
