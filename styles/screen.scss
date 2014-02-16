@@ -153,52 +153,48 @@ a {
     }
   .text-success, .text-green {
     color: $greenDark;
-  }
+    }
   .text-alert, .text-red {
     color: $redDark;
-  }
+    }
   .text-info, .text-blue {
     color: $blueDark;
-  }
+    }
   .text-purple {
     color: $purpleDark;
-  }
+    }
   .text-bluegreen {
     color: $bluegreenDark;
-  }
+    }
   .text-orange {
     color: $orangeDark;
-  }
-  .highlight {
+    }
+  mark {
     padding-left: 5px;
     padding-right: 5px;
     color: #FFF;
     cursor: default;
-  }
-  .highlight-success, .highlight-green {
-    @extend .highlight;
-    background-color: $greenDark;
-  }
-  .highlight-alert, .highlight-red {
-    @extend .highlight;
-    background-color: $redDark;
-  }
-  .highlight-info, .highlight-blue {
-    @extend .highlight;
-    background-color: $blueDark;
-  }
-  .highlight-purple {
-    @extend .highlight;
-    background-color: $purpleDark;
-  }
-  .highlight-bluegreen {
-    @extend .highlight;
-    background-color: $bluegreenDark;
-  }
-  .highlight-orange {
-    @extend .highlight;
-    background-color: $orangeDark;
-  }
+    background-color: $color;
+
+    &.success, &.green {
+      background-color: $greenDark;
+      }
+    &.alert, &.red {
+      background-color: $redDark;
+      }
+    &.info, &.blue {
+      background-color: $blueDark;
+      }
+    &.purple {
+      background-color: $purpleDark;
+      }
+    &.bluegreen {
+      background-color: $bluegreenDark;
+      }
+    &.orange {
+      background-color: $orangeDark;
+      }
+    }
   // Quote
   blockquote {
     font-style:italic;
@@ -311,20 +307,6 @@ a {
         }
       &[class]:after {
         content: attr(class);
-        }
-      }
-    // Mark
-    mark {
-      background:none;
-      color:$color;
-      font-style:normal;
-      &.important {
-        padding:3px 7px 0;
-        background:$color;
-        color:#FFF;
-        }
-      &.comment {
-        color:$gray;
         }
       }
     }
