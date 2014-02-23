@@ -6,6 +6,13 @@
 @import 'fonts';
 @import 'reset';
 
+@-webkit-keyframes blink {
+    0% {opacity: 1;}
+   49% {opacity: 1;}
+   50% {opacity: 0;}
+  100% {opacity: 0;}
+}
+
 body {
   counter-reset:slide;
   font:24px/2 'Open Sans', sans-serif;
@@ -151,6 +158,11 @@ a {
     line-height:1;
     font-family: 'Inconsolata', monospace, sans-serif;
     }
+  .text-left { text-align: left; }
+  .text-right { text-align: right; }
+  .text-center { text-align: center; }
+  .inactive { opacity: 0.025; }
+  li.present { opacity: 1; color: red; font-weight: bold; }
   .text-success, .text-green {
     color: $greenDark;
     }
@@ -169,6 +181,9 @@ a {
   .text-orange {
     color: $orangeDark;
     }
+  blink {
+    -webkit-animation: blink 1.0s infinite;
+  }
   mark {
     padding-left: 5px;
     padding-right: 5px;
@@ -234,12 +249,26 @@ a {
         display:inline-block;
         width:2em;
         color:$listItemColor;
+        font-weight: normal;
         text-align:right;
         }
       }
     ol,
     ul {
       margin:0 0 0 2em;
+      }
+    &.border-separated {
+      border-top: 2px solid lighten($color, 10%);
+      border-bottom: 2px solid lighten($color, 10%);
+      li {
+        &:before {
+          content: '';
+        }
+        border-bottom: 2px solid lighten($color, 10%);
+        &:last-child {
+          border-bottom: none;
+          }
+        }
       }
     }
   ul > li:before {
@@ -282,6 +311,7 @@ a {
       padding: 10px;
       padding-left: $left;
       white-space:pre-wrap;
+      min-height: 33px; // one line
       line-height:1.5;
       &:before {
         position:absolute;
@@ -417,6 +447,37 @@ a {
   // Cover
   &.cover {
     background:#000;
+
+    // Inner
+    > div {
+      position:absolute;
+      top:0;
+      left:0;
+      overflow:hidden;
+      padding:0;
+      width:$width;
+      height:$height;
+      }
+    .left-33 {
+      padding: 60px 0px;
+      font:38px/1 'Open Sans Light', sans-serif;
+      background-color: $color;
+      color: white;
+      width: 36%;
+      height: 100%;
+
+      p {
+        padding-left: 50px;
+        padding-right: 50px;
+      }
+
+      ul {
+        margin: 2em 0px;
+        li {
+          padding: 0.5em 50px;
+        }
+      }
+      }
     @mixin cover {
       img, svg, video,
       object, canvas, iframe {
@@ -489,15 +550,25 @@ a {
       border-top-left-radius: 20px;
       border-bottom-left-radius: 20px;
       background-color: rgba($color, 0.8);
+      }
     }
-  }
   &.section {
     @extend .cover;
+    // Inner
+    > div {
+      position:absolute;
+      top:0;
+      left:0;
+      overflow:hidden;
+      padding:$top $right $bottom $left;
+      width:$width - $left - $right;
+      height:$height - $top - $bottom;
+      }
     @extend .w;
     h2 {
       background-color: rgba($color, 0.8);
+      }
     }
-  }
   // Place
   .place {
     position:absolute;
@@ -809,9 +880,17 @@ a {
       font: 300 50px/1.4 'Open Sans Light',sans-serif;
       //background: url(/background.png);
 
+      > div {
+        position:absolute;
+        top:0;
+        left:0;
+        overflow:hidden;
+        padding:$top $right $bottom $left;
+        width:$width - $left - $right;
+        height:$height - $top - $bottom;
+      }
+
       h2 {
-        color: white;
-        //font: 600 50px/1.2 'PT Sans Narrow',sans-serif;
         font: 300 50px/1.3 'PT Sans Narrow',sans-serif;
         visibility: visible;
         display: block;
