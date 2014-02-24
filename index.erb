@@ -59,7 +59,7 @@
 	<div class="progress"><div></div></div>
     <script src="js/jquery-2.1.0.min.js"></script>
     <script src="js/script.js"></script>
-    <% (meta.js).each do |js| %>
+    <% meta.js.each do |js| %>
       <script src="<%= js %>"></script>
     <% end %>
   </body>
