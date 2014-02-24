@@ -75,7 +75,7 @@ class Mode
       #Slide.current().updateProgress()
     else
       Mode.enterListMode()
-      Slide.current().scrollTo()
+      Slide.current()?.scrollTo()
 
   # private
 
@@ -148,7 +148,7 @@ class Slide
 
   scrollTo: -> window.scrollTo 0, @offsetTop()
 
-  @offsetTop: -> document.getElementById(@id)?.offsetTop
+  offsetTop: -> @html()?.offset().top
 
   next: -> new Slide(@slideNumber + 1)
 
@@ -156,7 +156,7 @@ class Slide
 
   pushHistory: -> history.pushState null, null, @historyPath()
 
-  replaceHistory: -> history.pushState null, null, @historyPath()
+  replaceHistory: -> history.replaceState null, null, @historyPath()
 
   containsInactive: -> @firstInactiveElement().length > 0
 
@@ -188,7 +188,7 @@ class Slide
     @progress.width("#{width}%")
 
   historyPath: ->
-    path = url.pathname
+    path = window.location.pathname
     path += "?full" unless Mode.isListMode()
     path += @getHash()
     path
@@ -219,8 +219,6 @@ startEventSourceHandler = (uri) ->
         console.log e
 
 $ ->
-  url = window.location
-
   Init.init()
 
   # Event handlers
