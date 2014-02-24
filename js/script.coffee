@@ -57,6 +57,9 @@ class Mode
   @isListMode: ->
     !@body.classList.contains("full")
 
+  @isSlideMode: ->
+    !Mode.isListMode()
+
   @switchToListMode: ->
     Mode.enterListMode()
     slide = Slide.current()
@@ -86,15 +89,15 @@ class Mode
       node = node.parentNode
     null
 
-class Init
+class SlideInitializer
   @init: ->
     for slide in $("div.slide")
-      Init.initIncremental(slide)
-      Init.initPause(slide)
-      Init.initTypewriter(slide)
+      SlideInitializer.initIncremental(slide)
+      SlideInitializer.initPause(slide)
+      SlideInitializer.initTypewriter(slide)
 
   @initIncremental: (slide) ->
-    if $(slide).hasClass('incremental')
+    if $(slide).hasClass('incr')
       $(slide).find('ul > li').addClass('inactive')
 
   @initPause: (slide) ->
@@ -110,7 +113,7 @@ class Init
   @initTypewriter: (slide) ->
     if $(slide).hasClass('typewriter')
       null
-      #$(slide).find('code.sh').typewriter()
+      $(slide).find('code.sh').addClass('inactive')
 
 class Slide
   constructor: (slideNumber) ->
@@ -144,7 +147,7 @@ class Slide
 
   goto: ->
     window.location.hash = @getHash()
-    @updateProgress() unless Mode.isListMode()
+    @updateProgress() if Mode.isSlideMode()
 
   scrollTo: -> window.scrollTo 0, @offsetTop()
 
@@ -165,22 +168,24 @@ class Slide
   removePresentElement: -> @html().find('.present').first().removeClass('present')
 
   nextInactive: ->
+    @html().removeClass('incr') unless @containsInactive()
     element = @firstInactiveElement()
+    @html().find('.present').first().addClass('visited')
     @removePresentElement()
-    element.removeClass('inactive').addClass('present')
-    @html().removeClass('incremental') unless @containsInactive()
+    element.removeClass('inactive')
+    if element.is("code.sh")
+      element.typewriter()
+    else
+      element.addClass('present')
 
   # private
 
   slideList: -> Slide.slideList()
 
   normalizeSlideNumber: (slideNumber) ->
-    if 0 > slideNumber
-      @slideList().length - 1
-    else if @slideList().length <= slideNumber
-      0
-    else
-      slideNumber
+    firstIndex = 0
+    lastIndex = @slideList().length - 1
+    Math.min(Math.max(firstIndex, slideNumber), lastIndex)
 
   updateProgress: ->
     return unless @progress?
@@ -189,45 +194,71 @@ class Slide
 
   historyPath: ->
     path = window.location.pathname
-    path += "?full" unless Mode.isListMode()
+    path += "?full" if Mode.isSlideMode()
     path += @getHash()
     path
 
+
 class UserInterface
-  constructor: ->
+  @gotoFirstSlide: ->
+    Slide.first().goto()
 
-  #nextStep: ->
-  #prevStep: ->
+  @gotoLastSlide: ->
+    Slide.last().goto()
 
+  @nextStep: ->
+    slide = Slide.current()
+    if Mode.isSlideMode() and slide.containsInactive()
+      slide.nextInactive()
+    else
+      slide.html().removeClass('incr')
+      slide.removePresentElement()
+      slide.next().goto()
 
-startEventSourceHandler = (uri) ->
-  return if window["EventSource"] is `undefined`
-  source = new EventSource(uri)
-  source.onmessage = (e) ->
-    switch e.data
-      when "next" then Slide.current().next().goto()
-      when "prev" then Slide.current().prev().goto()
-      when "up"
-        unless Mode.isListMode()
-          e.preventDefault()
-          Mode.switchToListMode()
-      when "down"
-        if Mode.isListMode()
-          e.preventDefault()
-          Mode.switchToSlideMode()
-      else
-        console.log e
+  @prevStep: ->
+    Slide.current().prev().goto()
 
-$ ->
-  Init.init()
+  @conditionalStep: (prev) ->
+    method = if prev then 'prev' else 'next'
+    UserInterface[method+'Step']()
 
-  # Event handlers
-  window.addEventListener "DOMContentLoaded", ->
-    unless Mode.isListMode()
+  @resize: ->
+    Transform.scale() if Mode.isSlideMode()
+
+  @init: ->
+    if Mode.isSlideMode()
       Mode.enterSlideMode()
       slide = Slide.current() || Slide.first()
       slide.replaceHistory()
       slide.updateProgress()
+
+  @switchToListMode: (e) ->
+    if Mode.isSlideMode()
+      e.preventDefault()
+      Mode.switchToListMode()
+
+  @switchToSlideMode: (e) ->
+    if Mode.isListMode()
+      e.preventDefault()
+      Mode.switchToSlideMode()
+
+startEventSourceHandler = (uri) ->
+  return unless window["EventSource"]?
+  source = new EventSource(uri)
+  source.onmessage = (e) ->
+    switch e.data
+      when "next" then UserInterface.nextStep()
+      when "prev" then UserInterface.prevStep()
+      when "up"   then UserInterface.switchToListMode(e)
+      when "down" then UserInterface.switchToSlideMode(e)
+      else console.log e
+
+$ ->
+  SlideInitializer.init()
+
+  # Event handlers
+  window.addEventListener "DOMContentLoaded", ->
+    UserInterface.init()
   , false
 
   window.addEventListener "popstate", (e) ->
@@ -235,65 +266,44 @@ $ ->
   , false
 
   window.addEventListener "resize", (e) ->
-    Transform.scale() unless Mode.isListMode()
+    UserInterface.resize()
   , false
 
   document.addEventListener "keyup", (e) ->
     # Shortcut for alt, shift and meta keys
-    return  if e.altKey or e.ctrlKey or e.metaKey
+    return if e.altKey or e.ctrlKey or e.metaKey
     switch e.which
-      # F5
-      when 116, 13 # Enter
-        if Mode.isListMode() and Slide.current()?
-          e.preventDefault()
-          Mode.switchToSlideMode()
+      when 116, 13 # F5, Enter
+        UserInterface.switchToSlideMode(e) if Slide.current()?
       when 27 # Esc
-        unless Mode.isListMode()
-          e.preventDefault()
-          Mode.switchToListMode()
-      # PgUp
-      # Up
-      # Left
-      # h
-      when 33, 38, 37, 72, 75 # k
+        UserInterface.switchToListMode(e)
+      when 33, 38, 37, 72, 75 # PgUp, Up, Left, h, k
         e.preventDefault()
-        Slide.current().prev().goto()
-      # PgDown
-      # Down
-      # Right
-      # l
-      when 34, 40, 39, 76, 74 # j
+        UserInterface.prevStep()
+      when 34, 40, 39, 76, 74 # PgDown, Down, Right, l, j
         e.preventDefault()
-        slide = Slide.current()
-        if slide.containsInactive()
-          slide.nextInactive()
-        else
-          slide.removePresentElement()
-          slide.next().goto()
+        UserInterface.nextStep()
       when 36 # Home
         e.preventDefault()
-        Slide.first().goto()
+        UserInterface.gotoFirstSlide()
       when 35 # End
         e.preventDefault()
-        Slide.last().goto()
-      # Tab = +1; Shift + Tab = -1
-      when 9, 32 # Space = +1; Shift + Space = -1
+        UserInterface.gotoLastSlide()
+      when 9, 32 # Tab/Space = +1; &+Shift = -1
         e.preventDefault()
-        method = if e.shiftKey then 'prev' else 'next'
-        Slide.current[method]().goto()
+        UserInterface.conditionalStep(e.shiftKey)
   , false
 
   document.addEventListener "click", Mode.dispatchSingleSlideMode, false
   document.addEventListener "touchend", Mode.dispatchSingleSlideMode, false
   document.addEventListener "touchstart", (e) ->
-    unless Mode.isListMode()
+    if Mode.isSlideMode()
       x = e.touches[0].pageX
-      method = if x > window.innerWidth / 2 then 'next' else 'prev'
-      Slide.current()[method]().goto()
+      UserInterface.conditionalStep(x <= window.innerWidth / 2)
   , false
 
   document.addEventListener "touchmove", (e) ->
-    e.preventDefault() unless Mode.isListMode()
+    e.preventDefault() if Mode.isSlideMode()
   , false
 
   window.setTimeout ->

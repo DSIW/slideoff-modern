@@ -161,8 +161,6 @@ a {
   .text-left { text-align: left; }
   .text-right { text-align: right; }
   .text-center { text-align: center; }
-  .inactive { opacity: 0.025; }
-  li.present { opacity: 1; color: red; font-weight: bold; }
   .text-success, .text-green {
     color: $greenDark;
     }
@@ -272,7 +270,7 @@ a {
       }
     }
   ul > li:before {
-    content:'\2022\00A0\00A0\2009';
+    content:'\2023\00A0\00A0\2009';
     }
   ul > li:lang(ru):before {
     content:'\2014\00A0\2009';
@@ -300,14 +298,15 @@ a {
   pre {
     margin:0 -10px 20px;
     margin-left: ($left * -1);
-    padding:3px 0 0;
+    padding:0;
     counter-reset:code;
+    background-color: $colorCode;
     white-space:normal;
     font-size: 22px;
     code {
       display:block;
       position: relative;
-      background-color: $colorCode;
+      background-color: transparent;
       padding: 10px;
       padding-left: $left;
       white-space:pre-wrap;
@@ -843,6 +842,37 @@ a {
           -webkit-transform:translateX(0) translateY(100%);
           transform:translateX(0) translateY(100%);
           }
+        }
+      }
+    .inactive, .present {
+      -webkit-transition: opacity 0.5s ease-in-out 0.0s;
+      }
+    .visited {
+      -webkit-transition: opacity 0.5s ease-in-out 0.3s;
+      }
+    .inactive {
+      opacity: 0;
+      }
+    .incr.hover li.visited {
+      opacity: 0.5;
+      }
+    .incr li.present {
+      opacity: 1;
+      //color: $color;
+      //font-weight: bold;
+      &:before {
+        content:'\2023\00A0\00A0\2009';
+        }
+      }
+    .incr .border-separated {
+      li {
+        -webkit-transition: all 0.5s;
+      }
+      li.inactive {
+        margin-left: -400px;
+        }
+      li.present, li.visited {
+        margin-left: 0;
         }
       }
     // Progress
