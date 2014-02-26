@@ -16,16 +16,14 @@
     <header class="caption">
       <h1><%= meta.title %></h1>
     </header>
-    <%# TODO: Fix count %>
-    <% slides_count = sections.map { |section| section.slides.count + 2 }.reduce(:+) - 2 || 0 %>
     <% sections.each do |section| %>
       <% if section.number > 0 %>
-        <div id="slide-<%= section.number %>-s" class="slide chapter" data-slides="<%= slides_count %>">
+        <div id="slide-<%= section.number %>-s" class="slide chapter">
           <div>
             <h2><%= section.title %></h2>
           </div>
         </div>
-        <div id="slide-<%= section.number %>-toc" class="slide toc" data-slides="<%= slides_count %>">
+        <div id="slide-<%= section.number %>-toc" class="slide toc">
           <div>
             <h1><%= section.title %></h1>
             <h2>Inhalt</h2>
@@ -42,7 +40,7 @@
         </div>
       <% end %>
       <% section.slides.each do |slide| %>
-        <div id="slide-<%= section.number %>-<%= slide.number %>" class="slide <%= slide.classes %>" data-slides="<%= slides_count %>">
+        <div id="slide-<%= section.number %>-<%= slide.number %>" class="slide <%= slide.classes %>">
           <div>
             <h1><%= section.title %></h1>
             <% if slide.extract_title && !slide.extract_title.empty? %>

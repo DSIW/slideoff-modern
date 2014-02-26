@@ -91,10 +91,17 @@ class Mode
 
 class SlideInitializer
   @init: ->
-    for slide in $("div.slide")
+    $slides = $('.slide')
+    totalSize = $slides.length
+    for slide in $slides
+      SlideInitializer.initSlideNumber(slide, totalSize)
       SlideInitializer.initIncremental(slide)
       SlideInitializer.initPause(slide)
       SlideInitializer.initTypewriter(slide)
+
+  @initSlideNumber: (slide, total) ->
+    slideNum = $(slide).index()
+    $(slide).attr('data-slide', slideNum).attr('data-slides', total)
 
   @initIncremental: (slide) ->
     if $(slide).hasClass('incr')
