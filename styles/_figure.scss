@@ -1,0 +1,80 @@
+&.cover {
+  figure {
+    position: initial;
+    max-height: initial;
+    text-align: initial;
+    vertical-align: initial;
+
+    img {
+      max-height: initial;
+    }
+  }
+}
+
+figure {
+  position: relative;
+  max-height: 450px;
+  text-align: right;
+  vertical-align: bottom;
+
+  img {
+    max-height: 100%;
+  }
+
+  figcaption {
+    font: 9px 'Open Sans', sans-serif;
+    position: absolute;
+    bottom: 1.2em;
+    right: 0;
+    padding: 1px 3px;
+    background: rgba(#000, 0.66);
+    color: rgba(#FFF, 0.66);
+
+    > * {
+      vertical-align: middle;
+      line-height: 16px;
+      float: left;
+      margin-left: 3px;
+      &:first-child {
+        margin-left: 0px;
+      }
+      &:last-child:after {
+        display: table;
+        content: '';
+      }
+    }
+
+    .flickr {
+      background-image: url(../images/flickr.svg);
+      background-size: 15px;
+      height: 15px;
+      width: 15px;
+    }
+    .license {
+      vertical-align: middle;
+      $licenseSize: 12px;
+      display: inline-block;
+      height: 14px;
+      width: 14px;
+      background-size: $licenseSize;
+      background-repeat: no-repeat;
+
+      @each $license in cc by nc nd sa pd {
+        &.license-#{$license} {
+          background-image:url('../images/cc/#{$license}.svg');
+        }
+      }
+      &.license-cc:hover {
+        background-image:url(../images/cc/cc-white.svg);
+      }
+    }
+    a {
+      border: none;
+      color: rgba(#FFF, 0.66);
+
+      &:hover {
+        color: #FFF;
+      }
+    }
+  }
+}

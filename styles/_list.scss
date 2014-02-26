@@ -1,0 +1,106 @@
+.list {
+  position:absolute;
+  clip:rect(0, auto, auto, 0); // Having fun with IE10
+  padding:50px 0 50px 50px;
+  background:#E2E2E2 url(../images/mesh.png) 50% 0;
+  text-align:center;
+  @include retina {
+    background-image:url(../images/mesh@2x.png);
+    background-size:256px;
+  }
+  // Outfit
+  .caption,
+  .badge {
+    display:block;
+  }
+  // Slide
+  .slide {
+    // Gap between slides
+    $gap:50px;
+    position:relative;
+    top:$height/2 - $gap;
+    display:inline-block;
+    margin:($gap - $height/2) ($gap - $width/2) 0 0;
+    text-align:left;
+    -webkit-transform-origin:0 0;
+    transform-origin:0 0;
+    -webkit-transform:scale(0.5);
+    transform:scale(0.5);
+    @media (max-width:$break) {
+      top:$height/2 + $height/4 - $gap;
+      margin:($gap - ($height/2 + $height/4)) ($gap - ($width/2 + $width/4)) 0 0;
+      -webkit-transform:scale(0.25);
+      transform:scale(0.25);
+    }
+    // Frame
+    &:before {
+      position:absolute;
+      top:0;
+      left:0;
+      z-index:-1;
+      width:$width/2;
+      height:$height/2;
+      box-shadow:0 0 0 1px #DDD;
+      content:'';
+      -webkit-transform-origin:0 0;
+      transform-origin:0 0;
+      -webkit-transform:scale(2);
+      transform:scale(2);
+      @media (max-width:$break) {
+        width:$width/4;
+        height:$height/4;
+        -webkit-transform:scale(4);
+        transform:scale(4);
+      }
+    }
+    // Number
+    &:after {
+      top:100%;
+      bottom:auto;
+      padding-top:50px;
+      @media (max-width:$break) {
+        width:$width/2;
+        -webkit-transform-origin:0 0;
+        transform-origin:0 0;
+        -webkit-transform:scale(2);
+        transform:scale(2);
+      }
+    }
+    // Hover
+    &:hover:before {
+      box-shadow:
+      0 0 0 1px #EEE,
+      0 0 0 12px rgba(#FFF, 0.5);
+    }
+    // Current
+    &:target {
+      &:before {
+        box-shadow:
+        0 0 10px 0 darken($color, 5%),
+        0 0 0 12px $color;
+      }
+      &:after {
+        color:$color;
+      }
+    }
+    // Inner
+    > div {
+      &:before {
+        position:absolute;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+        z-index:2;
+        content:'';
+      }
+    }
+    // Cover Shout
+    &.cover,
+    &.shout {
+      &:after {
+        content:counter(slide) '/' attr(data-slides);
+      }
+    }
+  }
+}

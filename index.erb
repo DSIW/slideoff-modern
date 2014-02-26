@@ -20,42 +20,52 @@
       <% if section.number > 0 %>
         <div id="slide-<%= section.number %>-s" class="slide chapter">
           <div>
-            <h2><%= section.title %></h2>
+            <hgroup>
+              <h2><%= section.title %></h2>
+            </hgroup>
           </div>
         </div>
         <div id="slide-<%= section.number %>-toc" class="slide toc">
           <div>
-            <h1><%= section.title %></h1>
-            <h2>Inhalt</h2>
-
+            <hgroup>
+              <h1><%= section.title %></h1>
+              <h2>Inhalt</h2>
+            </hgroup>
             <ol>
-              <% section.slides.uniq { |slide| slide.extract_title }.each do |slide| %>
+              <% section.slides.uniq(&:extract_title).each do |slide| %>
                 <li><%= slide.extract_title %></li>
               <% end %>
             </ol>
+            <footer>
+              <%# meta.author %>
+            </footer>
           </div>
-          <footer>
-            <%# meta.author %>
-          </footer>
         </div>
       <% end %>
       <% section.slides.each do |slide| %>
         <div id="slide-<%= section.number %>-<%= slide.number %>" class="slide <%= slide.classes %>">
           <div>
-            <h1><%= section.title %></h1>
-            <% if slide.extract_title && !slide.extract_title.empty? %>
-              <h2><%= slide.extract_title %></h2>
-            <% end %>
+            <hgroup>
+              <% title_slide = section.number == 0 && slide.number == 0 %>
+              <% title, subtitle = title_slide ? [slide.extract_title, slide.extract_subtitle] : [section.title, slide.extract_title] %>
+              <h1><%= slide.extract_title %></h1>
+              <% if subtitle && !subtitle.empty? %>
+                <h2><%= subtitle %></h2>
+              <% end %>
+            </hgroup>
             <%= slide.html %>
+            <% unless section.number == 0 && slide.number == 0 %>
+              <footer>
+                <%# meta.author %>
+              </footer>
+            <% end %>
           </div>
-          <%#<footer>%>
-            <%# meta.author %>
-          <%#</footer>%>
         </div>
       <% end %>
     <% end %>
 	<div class="progress"><div></div></div>
     <script src="js/jquery-2.1.0.min.js"></script>
+    <script src="js/jquery.fittext.js"></script>
     <script src="js/script.js"></script>
     <% meta.js.each do |js| %>
       <script src="<%= js %>"></script>

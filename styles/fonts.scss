@@ -4,80 +4,81 @@
 
 // Open Sans
 @font-face {
-	font-family:'Open Sans';
-	src:url(../fonts/OpenSans.woff) format('woff');
-	}
+  font-family:'Open Sans';
+  src:url(../fonts/OpenSans.woff) format('woff');
+}
 @font-face {
-	font-weight:bold;
-	font-family:'Open Sans';
-	src:url(../fonts/OpenSans.Bold.woff) format('woff');
-	}
+  font-weight:bold;
+  font-family:'Open Sans';
+  src:url(../fonts/OpenSans.Bold.woff) format('woff');
+}
 @font-face {
-	font-style:italic;
-	font-family:'Open Sans';
-	src:url(../fonts/OpenSans.Italic.woff) format('woff');
-	}
+  font-style:italic;
+  font-family:'Open Sans';
+  src:url(../fonts/OpenSans.Italic.woff) format('woff');
+}
 @font-face {
-	font-style:italic;
-	font-weight:bold;
-	font-family:'Open Sans';
-	src:url(../fonts/OpenSans.Bold.Italic.woff) format('woff');
-	}
+  font-style:italic;
+  font-weight:bold;
+  font-family:'Open Sans';
+  src:url(../fonts/OpenSans.Bold.Italic.woff) format('woff');
+}
 @font-face {
-	font-family:'Open Sans Light';
-	src:url(../fonts/OpenSans.Light.woff) format('woff');
-	}
+  font-weight:300;
+  font-family:'Open Sans';
+  src:url(../fonts/OpenSans.Light.woff) format('woff');
+}
 
 /* PTSans */
 @font-face {
-	font-family:'PT Sans';
-	src:local('PT Sans'), local('PTSansRegular'),
-		url(../fonts/PTSans.woff) format('woff');
-	}
+  font-family:'PT Sans';
+  src:local('PT Sans'), local('PTSansRegular'),
+  url(../fonts/PTSans.woff) format('woff');
+}
 @font-face {
-	font-weight:bold;
-	font-family:'PT Sans';
-	src:local('PT Sans Bold'), local('PTSansBold'),
-		url(../fonts/PTSans.Bold.woff) format('woff');
-	}
+  font-weight:bold;
+  font-family:'PT Sans';
+  src:local('PT Sans Bold'), local('PTSansBold'),
+  url(../fonts/PTSans.Bold.woff) format('woff');
+}
 @font-face {
-	font-style:italic;
-	font-family:'PT Sans';
-	src:local('PT Sans Italic'), local('PTSansItalic'),
-		url(../fonts/PTSans.Italic.woff) format('woff');
-	}
+  font-style:italic;
+  font-family:'PT Sans';
+  src:local('PT Sans Italic'), local('PTSansItalic'),
+  url(../fonts/PTSans.Italic.woff) format('woff');
+}
 @font-face {
-	font-style:italic;
-	font-weight:bold;
-	font-family:'PT Sans';
-	src:local('PT Sans Bold Italic'), local('PTSansBoldItalic'),
-		url(../fonts/PTSans.Bold.Italic.woff) format('woff');
-	}
+  font-style:italic;
+  font-weight:bold;
+  font-family:'PT Sans';
+  src:local('PT Sans Bold Italic'), local('PTSansBoldItalic'),
+  url(../fonts/PTSans.Bold.Italic.woff) format('woff');
+}
 @font-face {
-	font-family:'PT Sans Narrow';
-	src:local('PT Sans Narrow'), local('PTSansNarrow'),
-		url(../fonts/PTSans.Narrow.woff) format('woff');
-	}
+  font-family:'PT Sans Narrow';
+  src:local('PT Sans Narrow'), local('PTSansNarrow'),
+  url(../fonts/PTSans.Narrow.woff) format('woff');
+}
 @font-face {
-	font-family:'PT Sans Narrow';
-	font-weight:bold;
-	src:local('PT Sans Narrow Bold'), local('PTSansNarrowBold'),
-		url(../fonts/PTSans.Narrow.Bold.woff) format('woff');
-	}
+  font-family:'PT Sans Narrow';
+  font-weight:bold;
+  src:local('PT Sans Narrow Bold'), local('PTSansNarrowBold'),
+  url(../fonts/PTSans.Narrow.Bold.woff) format('woff');
+}
 
 /* PT Mono */
 @font-face {
-	font-family:'PT Mono';
-	src:local('PT Mono'), local('PTMonoRegular'),
-		url(../fonts/PTMono.woff) format('woff');
-	}
+  font-family:'PT Mono';
+  src:local('PT Mono'), local('PTMonoRegular'),
+  url(../fonts/PTMono.woff) format('woff');
+}
 
 /* Linker */
 @font-face {
-	font-family:'Target Blank';
-	src:url(../fonts/TargetBlank.otf) format('opentype'),
-		url(../fonts/TargetBlank.svg#TargetBlank) format('svg');
-	}
+  font-family:'Target Blank';
+  src:url(../fonts/TargetBlank.otf) format('opentype'),
+  url(../fonts/TargetBlank.svg#TargetBlank) format('svg');
+}
 
 /* Inconcolata */
 @font-face {
@@ -85,12 +86,12 @@
   font-style: normal;
   font-weight: 400;
   src:local('Inconsolata'),
-    url(../fonts/Inconsolata.woff) format('woff');
-  }
+  url(../fonts/Inconsolata.woff) format('woff');
+}
 @font-face {
   font-family: 'Inconsolata';
   font-style: normal;
   font-weight: 700;
   src:local('Inconsolata Bold'), local('Inconsolata-Bold'),
-    url(../fonts/Inconsolata.Bold.woff) format('woff');
-  }
+  url(../fonts/Inconsolata.Bold.woff) format('woff');
+}

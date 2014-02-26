@@ -119,8 +119,7 @@ class SlideInitializer
 
   @initTypewriter: (slide) ->
     if $(slide).hasClass('typewriter')
-      null
-      $(slide).find('code.sh').addClass('inactive')
+      $(slide).find('pre[data-lang=sh] code').addClass('inactive')
 
 class Slide
   constructor: (slideNumber) ->
@@ -172,18 +171,18 @@ class Slide
 
   firstInactiveElement: -> @html().find('.inactive').first()
 
-  removePresentElement: -> @html().find('.present').first().removeClass('present')
+  removePresentElement: -> @html().find('.current').first().removeClass('current')
 
   nextInactive: ->
     @html().removeClass('incr') unless @containsInactive()
     element = @firstInactiveElement()
-    @html().find('.present').first().addClass('visited')
+    @html().find('.current').first().addClass('visited')
     @removePresentElement()
     element.removeClass('inactive')
-    if element.is("code.sh")
+    if element.is("pre[data-lang=sh] code")
       element.typewriter()
     else
-      element.addClass('present')
+      element.addClass('current')
 
   # private
 

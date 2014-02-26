@@ -1,0 +1,31 @@
+.inactive, .current {
+  -webkit-transition: opacity 0.5s ease-in-out 0.0s;
+}
+.visited {
+  -webkit-transition: opacity 0.5s ease-in-out 0.3s;
+}
+.inactive {
+  opacity: 0;
+}
+.incr.hover li.visited {
+  opacity: 0.5;
+}
+.incr li.current {
+  opacity: 1;
+  //color: $color;
+  //font-weight: bold;
+  &:before {
+    content:'\2023\00A0\00A0\2009';
+  }
+}
+.incr .border-separated {
+  li {
+    -webkit-transition: all 0.5s;
+  }
+  li.inactive {
+    margin-left: -400px;
+  }
+  li.current, li.visited {
+    margin-left: 0;
+  }
+}

@@ -1,0 +1,19 @@
+.progress {
+  position:absolute;
+  right:0;
+  bottom:0;
+  left:0;
+  z-index:1;
+  div {
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:0;
+    height:8px;
+    padding-left: -10px;
+    background:url(../images/progress-grayDark.svg) 100% 0 no-repeat;
+    -webkit-background-clip: content-box;
+    background-clip: content-box;
+    transition:width 0.3s linear;
+  }
+}

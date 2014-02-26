@@ -1,0 +1,48 @@
+@import 'defaults';
+
+.box {
+  color: white;
+  margin-bottom: 28px;
+  p {
+    margin: 0;
+    padding: 3px 10px;
+    font-size: 18px;
+    background-color: $grayLight;
+    &:first-child {
+      font-size: 20px;
+      background-color: $grayDark;
+      border-top-right-radius: 3px;
+      border-top-left-radius: 3px;
+    }
+    &:last-child {
+      border-bottom-right-radius: 3px;
+      border-bottom-left-radius: 3px;
+    }
+  }
+}
+
+@mixin box($headerColor, $contentColor) {
+  p {
+    background-color: $contentColor;
+    &:first-child { background-color: $headerColor; }
+  }
+}
+
+.box-bluegreen, .box-success {
+  @include box($bluegreenDark, $bluegreenLight);
+}
+.box-green, .box-example {
+  @include box($greenDark, $greenLight);
+}
+.box-red, .box-alert {
+  @include box($redDark, $redLight);
+}
+.box-blue, .box-info {
+  @include box($blueDark, $blueLight);
+}
+.box-purple {
+  @include box($purpleDark, $purpleLight);
+}
+.box-warning, .box-orange {
+  @include box($orangeDark, $orangeLight);
+}
