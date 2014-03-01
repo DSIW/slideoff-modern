@@ -22,14 +22,14 @@ $.fn.extend
         ourText = $("<span>" + text + "</span>").appendTo(self)
         multiplier = maxWidth / ourText.width()
         newSize = fontSize * (multiplier - 0.1)
-        ourText.css "fontSize", (if (maxFontSize > 0 and newSize > maxFontSize) then maxFontSize else newSize)
+        ourText.css "fontSize", (if maxFontSize > 0 and newSize > maxFontSize then maxFontSize else newSize)
         ourText.css "lineHeight", "1em"
         #ourText.css "textTransform", "uppercase"
         scrollHeight = self[0].scrollHeight
         if scrollHeight > maxHeight
           multiplier = maxHeight / scrollHeight
-          newSize = (newSize * multiplier)
-          ourText.css "fontSize", (if (maxFontSize > 0 and newSize > maxFontSize) then maxFontSize else newSize)
+          newSize = newSize * multiplier
+          ourText.css "fontSize", (if maxFontSize > 0 and newSize > maxFontSize then maxFontSize else newSize)
           ourText.css "lineHeight", "1em"
           #ourText.css "textTransform", "uppercase"
         return
@@ -43,7 +43,8 @@ $.fn.extend
 
       splittedText = self.html().split(/\s+|<.+?>/)
       words = []
-      words.push(word) if word && !word.empty?  for word in splittedText
+      for word in splittedText
+        words.push(word) if word && !word.empty?
       self.empty()
       if words.length > maxWords
         while words.length > 0

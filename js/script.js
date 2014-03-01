@@ -24,7 +24,7 @@ $.fn.extend({
     maxFontSize = parseInt(maxFontSize, 10) || 0;
     maxWords = parseInt(maxWords, 10) || 3;
     return this.each(function() {
-      var calcSize, fontSize, maxHeight, maxWidth, newText, orgText, self, splittedText, word, words;
+      var calcSize, fontSize, maxHeight, maxWidth, newText, orgText, self, splittedText, word, words, _i, _len;
       calcSize = function(text) {
         var multiplier, newSize, ourText, scrollHeight;
         ourText = $("<span>" + text + "</span>").appendTo(self);
@@ -47,16 +47,11 @@ $.fn.extend({
       maxWidth = self.width();
       splittedText = self.html().split(/\s+|<.+?>/);
       words = [];
-      if ((function() {
-        var _i, _len, _results;
-        _results = [];
-        for (_i = 0, _len = splittedText.length; _i < _len; _i++) {
-          word = splittedText[_i];
-          _results.push(word && (word.empty == null));
+      for (_i = 0, _len = splittedText.length; _i < _len; _i++) {
+        word = splittedText[_i];
+        if (word && (word.empty == null)) {
+          words.push(word);
         }
-        return _results;
-      })()) {
-        words.push(word);
       }
       self.empty();
       if (words.length > maxWords) {
