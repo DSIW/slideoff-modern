@@ -48,7 +48,7 @@
             <hgroup>
               <% title_slide = section.number == 0 && slide.number == 0 %>
               <% title, subtitle = title_slide ? [slide.extract_title, slide.extract_subtitle] : [section.title, slide.extract_title] %>
-              <h1><%= slide.extract_title %></h1>
+              <h1><%= title %></h1>
               <% if subtitle && !subtitle.empty? %>
                 <h2><%= subtitle %></h2>
               <% end %>
