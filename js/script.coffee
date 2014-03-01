@@ -182,6 +182,27 @@ class Slide
     id = window.location.hash.substr(1)
     Slide.fromSlideId(id)
 
+  nextSection: ->
+    next = @nextSectionId()
+    Slide.fromSlideId("slide-#{next}-s")
+
+  prevSection: ->
+    prev = @prevSectionId()
+    slideId = if prev == 0 then "0" else "s"
+    Slide.fromSlideId("slide-#{prev}-#{slideId}")
+
+  sectionId: ->
+    parseInt(@id.replace(/slide-/, '').split('-')[0], 10)
+
+  nextSectionId: ->
+    @normalizeSectionNumber(@sectionId() + 1)
+
+  prevSectionId: ->
+    @normalizeSectionNumber(@sectionId() - 1)
+
+  @currentSectionId: ->
+    Slide.current().sectionId()
+
   @fromSlideId: (slideId) ->
     for slide, index in Slide.slideList()
       return new Slide(index) if slideId is slide.id
@@ -233,9 +254,12 @@ class Slide
   slideList: -> Slide.slideList()
 
   normalizeSlideNumber: (slideNumber) ->
-    firstIndex = 0
     lastIndex = @slideList().length - 1
-    Math.min(Math.max(firstIndex, slideNumber), lastIndex)
+    @range(0, slideNumber, lastIndex)
+
+  normalizeSectionNumber: (sectionNumber) ->
+    lastIndex = @html().data('sections') - 1
+    @range(0, sectionNumber, lastIndex)
 
   updateProgress: ->
     return unless @progress?
@@ -247,6 +271,9 @@ class Slide
     path += "?full" if Mode.isSlideMode()
     path += @getHash()
     path
+
+  range: (min, i, max) ->
+    Math.min(Math.max(min, i), max)
 
 
 class UserInterface
@@ -267,6 +294,12 @@ class UserInterface
 
   @prevStep: ->
     Slide.current().prev().goto()
+
+  @nextBigStep: ->
+    Slide.current().nextSection().goto()
+
+  @prevBigStep: ->
+    Slide.current().prevSection().goto()
 
   @conditionalStep: (prev) ->
     method = if prev then 'prev' else 'next'
@@ -320,7 +353,7 @@ $ ->
   , false
 
   document.addEventListener "keyup", (e) ->
-    # Shortcut for alt, shift and meta keys
+    # Shortcut for alt, ctrl and meta keys
     return if e.altKey or e.ctrlKey or e.metaKey
     switch e.which
       when 116, 13 # F5, Enter
@@ -329,10 +362,16 @@ $ ->
         UserInterface.switchToListMode(e)
       when 33, 38, 37, 72, 75 # PgUp, Up, Left, h, k
         e.preventDefault()
-        UserInterface.prevStep()
+        if e.shiftKey
+          UserInterface.prevBigStep()
+        else
+          UserInterface.prevStep()
       when 34, 40, 39, 76, 74 # PgDown, Down, Right, l, j
         e.preventDefault()
-        UserInterface.nextStep()
+        if e.shiftKey
+          UserInterface.nextBigStep()
+        else
+          UserInterface.nextStep()
       when 36 # Home
         e.preventDefault()
         UserInterface.gotoFirstSlide()

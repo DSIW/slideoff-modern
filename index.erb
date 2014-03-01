@@ -18,14 +18,14 @@
     </header>
     <% sections.each do |section| %>
       <% if section.number > 0 %>
-        <div id="slide-<%= section.number %>-s" class="slide chapter">
+        <div id="slide-<%= section.number %>-s" data-section="<%= section.number %>" data-sections="<%= sections.length %>" class="slide chapter">
           <div>
             <hgroup>
               <h2><%= section.title %></h2>
             </hgroup>
           </div>
         </div>
-        <div id="slide-<%= section.number %>-toc" class="slide toc">
+        <div id="slide-<%= section.number %>-toc" data-section="<%= section.number %>" data-sections="<%= sections.length %>" class="slide toc">
           <div>
             <hgroup>
               <h1><%= section.title %></h1>
@@ -43,7 +43,7 @@
         </div>
       <% end %>
       <% section.slides.each do |slide| %>
-        <div id="slide-<%= section.number %>-<%= slide.number %>" class="slide <%= slide.classes %>">
+        <div id="slide-<%= section.number %>-<%= slide.number %>" data-section="<%= section.number %>" data-sections="<%= sections.length %>" class="slide <%= slide.classes %>">
           <div>
             <hgroup>
               <% title_slide = section.number == 0 && slide.number == 0 %>

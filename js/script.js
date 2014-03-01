@@ -259,6 +259,35 @@ Slide = (function() {
     return Slide.fromSlideId(id);
   };
 
+  Slide.prototype.nextSection = function() {
+    var next;
+    next = this.nextSectionId();
+    return Slide.fromSlideId("slide-" + next + "-s");
+  };
+
+  Slide.prototype.prevSection = function() {
+    var prev, slideId;
+    prev = this.prevSectionId();
+    slideId = prev === 0 ? "0" : "s";
+    return Slide.fromSlideId("slide-" + prev + "-" + slideId);
+  };
+
+  Slide.prototype.sectionId = function() {
+    return parseInt(this.id.replace(/slide-/, '').split('-')[0], 10);
+  };
+
+  Slide.prototype.nextSectionId = function() {
+    return this.normalizeSectionNumber(this.sectionId() + 1);
+  };
+
+  Slide.prototype.prevSectionId = function() {
+    return this.normalizeSectionNumber(this.sectionId() - 1);
+  };
+
+  Slide.currentSectionId = function() {
+    return Slide.current().sectionId();
+  };
+
   Slide.fromSlideId = function(slideId) {
     var index, slide, _i, _len, _ref;
     _ref = Slide.slideList();
@@ -352,10 +381,15 @@ Slide = (function() {
   };
 
   Slide.prototype.normalizeSlideNumber = function(slideNumber) {
-    var firstIndex, lastIndex;
-    firstIndex = 0;
+    var lastIndex;
     lastIndex = this.slideList().length - 1;
-    return Math.min(Math.max(firstIndex, slideNumber), lastIndex);
+    return this.range(0, slideNumber, lastIndex);
+  };
+
+  Slide.prototype.normalizeSectionNumber = function(sectionNumber) {
+    var lastIndex;
+    lastIndex = this.html().data('sections') - 1;
+    return this.range(0, sectionNumber, lastIndex);
   };
 
   Slide.prototype.updateProgress = function() {
@@ -375,6 +409,10 @@ Slide = (function() {
     }
     path += this.getHash();
     return path;
+  };
+
+  Slide.prototype.range = function(min, i, max) {
+    return Math.min(Math.max(min, i), max);
   };
 
   return Slide;
@@ -406,6 +444,14 @@ UserInterface = (function() {
 
   UserInterface.prevStep = function() {
     return Slide.current().prev().goto();
+  };
+
+  UserInterface.nextBigStep = function() {
+    return Slide.current().nextSection().goto();
+  };
+
+  UserInterface.prevBigStep = function() {
+    return Slide.current().prevSection().goto();
   };
 
   UserInterface.conditionalStep = function(prev) {
@@ -500,14 +546,24 @@ $(function() {
       case 72:
       case 75:
         e.preventDefault();
-        return UserInterface.prevStep();
+        if (e.shiftKey) {
+          return UserInterface.prevBigStep();
+        } else {
+          return UserInterface.prevStep();
+        }
+        break;
       case 34:
       case 40:
       case 39:
       case 76:
       case 74:
         e.preventDefault();
-        return UserInterface.nextStep();
+        if (e.shiftKey) {
+          return UserInterface.nextBigStep();
+        } else {
+          return UserInterface.nextStep();
+        }
+        break;
       case 36:
         e.preventDefault();
         return UserInterface.gotoFirstSlide();
