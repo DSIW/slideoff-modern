@@ -11,7 +11,7 @@ $.fn.extend
           clearInterval(timer)
           $el.text(str)
         progress++
-      , 130
+      , 100
     this
 
   textfill: (maxFontSize, maxWords) ->
