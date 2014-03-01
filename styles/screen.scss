@@ -668,9 +668,13 @@ a {
     top:0;
     left:0;
     overflow:hidden;
-    padding:$top $right 0 $left;
+    padding:$top $right $bottom $left;
     width:$width - $left - $right;
     height:$height - $top - $bottom;
+  }
+
+  footer {
+    display: block;
   }
 
   hgroup {
