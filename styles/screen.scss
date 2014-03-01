@@ -14,7 +14,6 @@
 }
 
 body {
-  counter-reset:slide;
   font:24px/2 'Open Sans', sans-serif;
 }
 a {
@@ -103,8 +102,7 @@ a {
     right:$right;
     bottom:15px;
     color:$color;
-    counter-increment:slide;
-    content:counter(slide)' / 'attr(data-slides);
+    content:attr(data-slide)' / 'attr(data-slides);
     line-height:1;
     font-size: 17px;
   }
