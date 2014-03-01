@@ -152,6 +152,7 @@ Mode = (function() {
 
   Mode.reload = function() {
     var _ref;
+    Slide.current() || Slide.first().goto();
     if (window.location.search.substr(1) === 'full') {
       return Mode.enterSlideMode();
     } else {

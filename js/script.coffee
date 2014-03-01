@@ -116,6 +116,7 @@ class Mode
     slide.updateProgress()
 
   @reload: ->
+    Slide.current() || Slide.first().goto()
     if window.location.search.substr(1) is 'full'
       Mode.enterSlideMode()
       #Slide.current().updateProgress()
