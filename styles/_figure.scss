@@ -24,7 +24,8 @@ figure {
   figcaption {
     font: 9px 'Open Sans', sans-serif;
     position: absolute;
-    bottom: 1.2em;
+    float: right;
+    bottom: 1em;
     right: 0;
     padding: 1px 3px;
     background: rgba(#000, 0.66);

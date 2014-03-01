@@ -292,7 +292,7 @@ a {
   dl {
     margin: 0 0 28px;
     dt {
-      font-weight: bold;
+      font-weight: bolder;
       float: left;
       width: 140px;
       clear: left;
@@ -311,7 +311,7 @@ a {
     background-color: $colorCode;
     white-space:normal;
     font-size: 22px;
-    padding: 5px 0;
+    padding: 5px;
     padding-left: $left;
     min-height: 33px; // one line
     white-space:pre-wrap;
@@ -325,7 +325,7 @@ a {
         position:absolute;
         margin-left:-40px;
         font-size: 0.8em;
-        line-height: 33px;
+        line-height: 34px;
         vertical-align: middle;
         color: darken($colorCode, 25%);
         counter-increment:code;
@@ -394,6 +394,10 @@ a {
   // Cover
   &.cover {
     background:#000;
+
+    hgroup {
+      background-color: transparent;
+    }
 
     // Inner
     > div {
@@ -490,19 +494,23 @@ a {
   // Shout
   &.shout {
     background:$color;
+    hgroup {
+      position: initial;
+      background-color: transparent;
+    }
     h1 {
       visibility: hidden;
     }
     h2 {
       position:absolute;
       top:50%;
-      left:128px;
-      right:96px;
+      left: 128px;
       color:#FFF;
       font-size:100px;
       -webkit-transform:translateY(-50%);
       transform:translateY(-50%);
       border-bottom: none;
+      z-index: 1;
       a {
         border-bottom:none;
         color:#FFF;
@@ -530,18 +538,13 @@ a {
     @extend .left;
     @extend .cover;
     @extend .w;
-    hgroup {
-      background-color: transparent;
-    }
     h2 {
-      padding-top: 20px;
-      padding-bottom: 20px;
-      padding-left: 20px;
-      margin-left: 250px;
+      padding: 20px;
+      padding-right: 1em;
+      //margin-left: 250px;
       border-top-left-radius: 20px;
       border-bottom-left-radius: 20px;
       background-color: rgba($color, 0.8);
-      top: 450px;
       right: 0;
     }
   }
@@ -549,6 +552,9 @@ a {
     @extend .cover;
     @include inner-div;
     @extend .w;
+    hgroup {
+      background-color: $color;
+    }
     h2 {
       background-color: rgba($color, 0.8);
     }
@@ -609,11 +615,14 @@ a {
   color: $grayDark;
   font-size: 70px;
   font-weight: 700;
-  font: 300 50px/1.4 'Open Sans Light',sans-serif;
-  //background: url(/background.png);
+  font: 100 50px/1.4 'Open Sans',sans-serif;
+
+  hgroup {
+    background-color: $color;
+  }
 
   dl {
-    font: 23px/1.6 'Open Sans Light', sans-serif;
+    font: 100 23px/1.6 'Open Sans', sans-serif;
   }
 
   > div {
@@ -643,10 +652,9 @@ a {
   }
 
   p {
-    font: 27px/1.6 'Open Sans Light', sans-serif;
+    font: 27px/1.6 'Open Sans', sans-serif;
     color: $grayDark;
     margin: 20px 0;
-    //font-style: italic;
 
     &.date {
       font-family: 'Open Sans', sans-serif;
