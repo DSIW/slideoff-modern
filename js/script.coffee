@@ -14,6 +14,48 @@ $.fn.extend
       , 130
     this
 
+  textfill: (maxFontSize, maxWords) ->
+    maxFontSize = parseInt(maxFontSize, 10) || 0
+    maxWords = parseInt(maxWords, 10) || 3
+    @each ->
+      calcSize = (text) ->
+        ourText = $("<span>" + text + "</span>").appendTo(self)
+        multiplier = maxWidth / ourText.width()
+        newSize = fontSize * (multiplier - 0.1)
+        ourText.css "fontSize", (if (maxFontSize > 0 and newSize > maxFontSize) then maxFontSize else newSize)
+        ourText.css "lineHeight", "1em"
+        #ourText.css "textTransform", "uppercase"
+        scrollHeight = self[0].scrollHeight
+        if scrollHeight > maxHeight
+          multiplier = maxHeight / scrollHeight
+          newSize = (newSize * multiplier)
+          ourText.css "fontSize", (if (maxFontSize > 0 and newSize > maxFontSize) then maxFontSize else newSize)
+          ourText.css "lineHeight", "1em"
+          #ourText.css "textTransform", "uppercase"
+        return
+
+      self = $(this)
+      orgText = self.text()
+      fontSize = parseInt(self.css("fontSize"), 10)
+      #lineHeight = parseInt(self.css("lineHeight"), "1em")
+      maxHeight = self.height()
+      maxWidth = self.width()
+
+      splittedText = self.html().split(/\s+|<.+?>/)
+      words = []
+      words.push(word) if word && !word.empty?  for word in splittedText
+      self.empty()
+      if words.length > maxWords
+        while words.length > 0
+          newText = words.splice(0, maxWords).join(" ")
+          console.log
+          calcSize newText
+          self.append "<br>"
+      else
+        calcSize orgText
+      return
+
+
 class Transform
   @body = document.body
 
