@@ -195,26 +195,32 @@ a {
   mark {
     padding-left: 5px;
     padding-right: 5px;
-    color: #FFF;
+    color: $color;
     cursor: default;
-    background-color: $color;
+    background-color: white;
 
     &.success, &.green {
+      color: white;
       background-color: $greenDark;
     }
     &.alert, &.red {
+      color: white;
       background-color: $redDark;
     }
     &.info, &.blue {
+      color: white;
       background-color: $blueDark;
     }
     &.purple {
+      color: white;
       background-color: $purpleDark;
     }
     &.bluegreen {
+      color: white;
       background-color: $bluegreenDark;
     }
     &.orange {
+      color: white;
       background-color: $orangeDark;
     }
   }
