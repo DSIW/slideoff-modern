@@ -1,3 +1,50 @@
+# Radialize the colors
+Highcharts.setOptions
+  colors: [
+    '#96000F'
+    '#E10019'
+    '#AAA5A0'
+    '#46413C'
+    '#327D91'
+    '#4BBEE1'
+    '#560F32'
+    '#821350'
+    '#006450'
+    '#009682'
+    '#697D19'
+    '#9BC328'
+    '#AA5500'
+    '#FF8200'
+  ]
+  credits:
+    enabled: true
+  legend:
+    enabled: false
+  tooltip:
+    enabled: false
+  title:
+    text: ''
+  chart:
+    backgroundColor: 'rgba(0,0,0,0)'
+    plotBackgroundColor: null
+    plotBorderWidth: null
+    plotShadow: false
+    margin: [0, 0, 0, 0]
+    style:
+      fontFamily: 'Open Sans Light'
+      fontSize: '20px'
+      color: 'black'
+
+Highcharts.getOptions().colors = Highcharts.map Highcharts.getOptions().colors, (color) ->
+  radialGradient:
+    cx: 0.5
+    cy: 0.3
+    r: 0.7
+  stops: [
+    [0, color]
+    [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] # darken
+  ]
+
 $.fn.extend
   typewriter: ->
     this.each ->
