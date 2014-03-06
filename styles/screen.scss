@@ -173,6 +173,9 @@ a {
   // Text
   p {
     margin:0 0 28px;
+    &.pause {
+      margin: 0;
+    }
   }
   a {
     border-bottom:0.1em solid;
@@ -335,7 +338,7 @@ a {
     background-color: $colorCode;
     white-space:normal;
     font-size: 22px;
-    padding: 5px;
+    padding: 0px 5px;
     padding-left: $left;
     min-height: 33px; // one line
     white-space:pre-wrap;
@@ -360,7 +363,6 @@ a {
       }
     }
     &:after {
-      color: white;
       background-color: $color;
       color: lighten($color, 60%);
       right: 0;
@@ -377,7 +379,7 @@ a {
   }
   // Table
   table {
-    margin:0 0 50px;
+    margin:0 0 28px;
     width:100%;
     border-collapse:collapse;
     border-spacing:0;
@@ -388,7 +390,6 @@ a {
     th {
       color:white;
       background-color:$color;
-      text-align:left;
     }
     &.striped {
       tr:nth-child(even) {
