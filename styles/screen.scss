@@ -603,6 +603,12 @@ a {
       background-color: rgba($color, 0.8);
     }
   }
+  .col2 {
+    -webkit-columns: 2;
+    li {
+      text-indent: 0em;
+    }
+  }
   // Place
   .place {
     position:absolute;
