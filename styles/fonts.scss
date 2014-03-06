@@ -2,15 +2,87 @@
 // Copyright © 2010–2013 Vadim Makeev, pepelsbey.net
 // Licensed under MIT license: github.com/shower/shower/wiki/MIT-License
 
-// Open Sans
+// Yanone Kaffeesatz
 @font-face {
-  font-family:'Open Sans';
-  src:url(../fonts/OpenSans.woff) format('woff');
+  font-family: 'Yanone Kaffeesatz';
+  font-style: normal;
+  font-weight: 200;
+  src: local('Yanone Kaffeesatz ExtraLight'), local('YanoneKaffeesatz-ExtraLight'), url(../fonts/YanoneKaffeesatz.ExtraLight.woff) format('woff');
 }
 @font-face {
-  font-weight:bold;
+  font-family: 'Yanone Kaffeesatz';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Yanone Kaffeesatz Light'), local('YanoneKaffeesatz-Light'), url(../fonts/YanoneKaffeesatz.Light.woff) format('woff');
+}
+@font-face {
+  font-family: 'Yanone Kaffeesatz';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Yanone Kaffeesatz Regular'), local('YanoneKaffeesatz-Regular'), url(../fonts/YanoneKaffeesatz.Regular.woff) format('woff');
+}
+@font-face {
+  font-family: 'Yanone Kaffeesatz';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Yanone Kaffeesatz Bold'), local('YanoneKaffeesatz-Bold'), url(../fonts/YanoneKaffeesatz.Bold.woff) format('woff');
+}
+
+// Goudy Bookletter
+@font-face {
+  font-family:'Goudy Bookletter 1911';
+  src:url(../fonts/GoudyBookletter.1911.woff) format('woff');
+}
+
+// Raleway
+@font-face {
+  font-family:'Raleway';
+  src:url(../fonts/Raleway.Thin.woff) format('woff');
+}
+
+// Juction
+@font-face {
+  font-family:'Junction';
+  src:url(../fonts/Junction.woff) format('woff');
+}
+
+// Open Sans WOFF
+@font-face {
+  font-family:'Open Sans';
+  src:url(../fonts/OpenSans.Regular.woff) format('woff');
+}
+@font-face {
+  font-weight:700;
   font-family:'Open Sans';
   src:url(../fonts/OpenSans.Bold.woff) format('woff');
+}
+@font-face {
+  font-weight:700;
+  font-style:italic;
+  font-family:'Open Sans';
+  src:url(../fonts/OpenSans.BoldItalic.woff) format('woff');
+}
+@font-face {
+  font-weight:600;
+  font-family:'Open Sans';
+  src:url(../fonts/OpenSans.Semibold.woff) format('woff');
+}
+@font-face {
+  font-weight:600;
+  font-style:italic;
+  font-family:'Open Sans';
+  src:url(../fonts/OpenSans.SemiboldItalic.woff) format('woff');
+}
+@font-face {
+  font-weight:800;
+  font-family:'Open Sans';
+  src:url(../fonts/OpenSans.ExtraBold.woff) format('woff');
+}
+@font-face {
+  font-weight:800;
+  font-style:italic;
+  font-family:'Open Sans';
+  src:url(../fonts/OpenSans.ExtraBoldItalic.woff) format('woff');
 }
 @font-face {
   font-style:italic;
@@ -18,15 +90,19 @@
   src:url(../fonts/OpenSans.Italic.woff) format('woff');
 }
 @font-face {
-  font-style:italic;
-  font-weight:bold;
-  font-family:'Open Sans';
-  src:url(../fonts/OpenSans.Bold.Italic.woff) format('woff');
-}
-@font-face {
   font-weight:300;
   font-family:'Open Sans';
   src:url(../fonts/OpenSans.Light.woff) format('woff');
+}
+@font-face {
+  font-family:'Open Sans Light';
+  src:url(../fonts/OpenSans.Light.woff) format('woff');
+}
+@font-face {
+  font-weight:300;
+  font-style:italic;
+  font-family:'Open Sans';
+  src:url(../fonts/OpenSans.LightItalic.woff) format('woff');
 }
 
 /* PTSans */
