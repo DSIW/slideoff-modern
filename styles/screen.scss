@@ -6,6 +6,25 @@
 @import 'fonts';
 @import 'reset';
 
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+.text-success, .text-green { color: $greenDark; }
+.text-alert, .text-red { color: $redDark; }
+.text-info, .text-blue { color: $blueDark; }
+.text-purple { color: $purpleDark; }
+.text-bluegreen { color: $bluegreenDark; }
+.text-orange { color: $orangeDark; }
+.bg-black       { background-color: black !important;          }
+.bg-white       { background-color: white !important;          }
+.bg-blue        { background-color: $blueDark !important;      }
+.bg-bluegreen   { background-color: $bluegreenDark !important; }
+.bg-gray        { background-color: $grayDark !important;      }
+.bg-red         { background-color: $redDark !important;       }
+.bg-green       { background-color: $greenDark !important;     }
+.bg-orange      { background-color: $orangeDark !important;    }
+.bg-purple      { background-color: $purpleDark !important;    }
+
 @-webkit-keyframes blink {
   0% {opacity: 1;}
   49% {opacity: 1;}
@@ -167,27 +186,6 @@ a {
     &.inline {
       padding:2px 7px;
     }
-  }
-  .text-left { text-align: left; }
-  .text-right { text-align: right; }
-  .text-center { text-align: center; }
-  .text-success, .text-green {
-    color: $greenDark;
-  }
-  .text-alert, .text-red {
-    color: $redDark;
-  }
-  .text-info, .text-blue {
-    color: $blueDark;
-  }
-  .text-purple {
-    color: $purpleDark;
-  }
-  .text-bluegreen {
-    color: $bluegreenDark;
-  }
-  .text-orange {
-    color: $orangeDark;
   }
   blink {
     -webkit-animation: blink 1.0s infinite;
