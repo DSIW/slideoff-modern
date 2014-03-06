@@ -259,6 +259,9 @@ a {
   ol, ul {
     margin:0 0 28px;
     counter-reset:list;
+    ol, ul { // inner list
+      margin:0 0 0 2em;
+    }
     li {
       text-indent:-2em;
       &:before {
@@ -268,10 +271,6 @@ a {
         font-weight: normal;
         text-align:right;
       }
-    }
-    ol,
-    ul {
-      margin:0 0 0 2em;
     }
     &.border-separated {
       li {

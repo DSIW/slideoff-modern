@@ -3,14 +3,20 @@
 .box {
   color: white;
   margin-bottom: 28px;
-  p {
+  div {
     margin: 0;
-    padding: 3px 10px;
-    font-size: 18px;
+    padding: 1px 15px;
+    font-size: 22px;
     background-color: $grayLight;
-    &:first-child {
-      font-size: 20px;
+    &.box-header {
+      font-size: 24px;
       background-color: $grayDark;
+      &:not(:first-child) {
+        text-indent: 0.5em;
+      }
+    }
+    &:first-child {
+      @extend .box-header;
       border-top-right-radius: 3px;
       border-top-left-radius: 3px;
     }
@@ -19,12 +25,39 @@
       border-bottom-left-radius: 3px;
     }
   }
+
+  ul, ol {
+    margin: 0;
+    background-color: $grayLight;
+    ol, ul { // inner list
+      margin:0 0 0 2em;
+    }
+    li {
+      color: white;
+      text-indent: 0em;
+      background-color: $grayLight;
+      &:before {
+        color: white;
+      }
+    }
+  }
 }
 
 @mixin box($headerColor, $contentColor) {
-  p {
+  div {
     background-color: $contentColor;
-    &:first-child { background-color: $headerColor; }
+    &.box-header {
+      background-color: $headerColor;
+    }
+    &:first-child {
+      @extend .box-header;
+    }
+  }
+  ul, ol {
+    background-color: $contentColor;
+    li {
+      background-color: $contentColor;
+    }
   }
 }
 
