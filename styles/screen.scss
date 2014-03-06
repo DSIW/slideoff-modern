@@ -592,6 +592,17 @@ a {
       right: 0;
     }
   }
+  &.chapter-html {
+    @extend .shout;
+    h2 {
+      left: 0;
+      right: 0;
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 4.5em;
+      letter-spacing: -4px;
+    }
+  }
   &.section {
     @extend .cover;
     @include inner-div;
