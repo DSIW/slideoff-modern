@@ -171,3 +171,27 @@
   src:local('Inconsolata Bold'), local('Inconsolata-Bold'),
   url(../fonts/Inconsolata.Bold.woff) format('woff');
 }
+
+// STIX Math
+@font-face {
+  font-family:'Stix';
+  src:url(../fonts/STIXGeneral.Regular.woff) format('woff');
+}
+@font-face {
+  font-family:'Stix';
+  font-style: normal;
+  font-weight: bold;
+  src:url(../fonts/STIXGeneral.Bold.woff) format('woff');
+}
+@font-face {
+  font-family:'Stix';
+  font-style: italic;
+  font-weight: bold;
+  src:url(../fonts/STIXGeneral.BoldItalic.woff) format('woff');
+}
+@font-face {
+  font-family:'Stix';
+  font-style: italic;
+  src:url(../fonts/STIXGeneral.Italic.woff) format('woff');
+}
+
