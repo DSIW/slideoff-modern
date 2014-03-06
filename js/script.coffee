@@ -148,8 +148,18 @@ class SlideInitializer
     $(slide).attr('data-slide', slideNum).attr('data-slides', total)
 
   @initIncremental: (slide) ->
-    if $(slide).hasClass('incr')
-      $(slide).find('ul > li').addClass('inactive')
+    $slide = $(slide)
+    if $slide.hasClass('incr-list')
+      $slide.find('ul > li:first-child').addClass('current')
+      $slide.find('ol > li:first-child').addClass('current')
+      $slide.find('ul > li:not(:first-child)').addClass('inactive')
+      $slide.find('ol > li:not(:first-child)').addClass('inactive')
+    if $slide.hasClass('incr-code')
+      $slide.find('pre > code:first-child').addClass('current')
+      $slide.find('pre > code:not(:first-child)').addClass('inactive')
+    if $slide.hasClass('incr-table')
+      $slide.find('table > tbody > tr:first-child').addClass('current')
+      $slide.find('table > tbody > tr:not(:first-child)').addClass('inactive')
 
   @initPause: (slide) ->
     pauses = $(slide).find(".pause")
