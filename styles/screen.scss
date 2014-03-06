@@ -164,6 +164,12 @@ a {
       text-transform: uppercase;
     }
   }
+  hr {
+    border: none;
+    background-color: $color;
+    height: 0.1em;
+    margin:0 0 28px;
+  }
   // Text
   p {
     margin:0 0 28px;
