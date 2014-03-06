@@ -226,7 +226,10 @@ class Slide
   html: -> $(@getHash())
 
   goto: ->
-    window.location.hash = @getHash()
+    hash = @getHash()
+    window.location.hash = hash
+    $('body').trigger('goto.slideoff', {target: hash})
+    $('body').trigger(hash+'.goto.slideoff', {target: hash})
     @updateProgress() if Mode.isSlideMode()
 
   scrollTo: -> window.scrollTo 0, @offsetTop()
