@@ -184,12 +184,11 @@ class Slide
 
   nextSection: ->
     next = @nextSectionId()
-    Slide.fromSlideId("slide-#{next}-s")
+    Slide.fromSlideId("slide-#{next}-0")
 
   prevSection: ->
     prev = @prevSectionId()
-    slideId = if prev == 0 then "0" else "s"
-    Slide.fromSlideId("slide-#{prev}-#{slideId}")
+    Slide.fromSlideId("slide-#{prev}-0")
 
   sectionId: ->
     parseInt(@id.replace(/slide-/, '').split('-')[0], 10)
