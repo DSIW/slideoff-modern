@@ -32,8 +32,8 @@
               <h2>Inhalt</h2>
             </hgroup>
             <ol>
-              <% section.slides.uniq(&:extract_title).each do |slide| %>
-                <li><%= slide.extract_title %></li>
+              <% section.slides.map(&:extract_title).compact.reject(&:empty?).uniq.each do |title| %>
+                <li><%= title %></li>
               <% end %>
             </ol>
             <footer>
