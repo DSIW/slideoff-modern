@@ -135,7 +135,7 @@ class Mode
 
 class SlideInitializer
   @init: ->
-    $slides = $('.slide')
+    $slides = $('.slide').not('.disabled')
     totalSize = $slides.length
     for slide in $slides
       SlideInitializer.initSlideNumber(slide, totalSize)
@@ -173,7 +173,7 @@ class Slide
     @progress = $(".progress div").first()
 
   @slideList: ->
-    slides = $("div.slide")
+    slides = $("div.slide").not('.disabled')
     slideList = []
     slideList.push id: slide.id for slide in slides
     slideList
