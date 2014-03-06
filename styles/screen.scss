@@ -386,12 +386,23 @@ a {
     }
   }
   // iframe
-  iframe {
-    height: 100%;
+  img, iframe {
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
     max-height: 440px;
-    width: 100%;
+    max-width: 850px;
+
+    &.inline {
+      position: initial;
+      -webkit-transform: none;
+    }
+  }
+  iframe {
     box-shadow: 3px 3px 7px rgba(#000, 0.3);
     border: 1px solid darken(#fff, 10%);
+    width: 100%;
+    height: 100%;
   }
   iframe::-webkit-scrollbar {
     display: none;
@@ -480,9 +491,12 @@ a {
       object, canvas, iframe {
         @content;
       }
+      iframe, img {
+        max-height: none;
+        max-width: none;
+      }
       iframe {
         z-index: 0;
-        max-height: none;
       }
     }
     @include cover {
