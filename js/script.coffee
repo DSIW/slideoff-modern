@@ -107,9 +107,9 @@ $.fn.extend
 class Transform
   @body = document.body
 
-  @get: ->
+  @getScaleFactor: ->
     denominator = Math.max(@body.clientWidth / window.innerWidth, @body.clientHeight / window.innerHeight)
-    "scale(" + (1 / denominator) + ")"
+    1 / denominator
 
   @apply: (transform) ->
     @body.style.WebkitTransform = transform
@@ -119,7 +119,7 @@ class Transform
     @body.style.transform = transform
 
   @scale: ->
-    Transform.apply(Transform.get())
+    Transform.apply("scale(/#{@getScaleFactor()})")
 
   @reset: ->
     Transform.apply('none')
