@@ -182,6 +182,7 @@ class Mode
 
 class SlideInitializer
   @init: ->
+    # SlideInitializer.initMouseClick()
     $slides = $('.slide').not('.disabled')
     totalSize = $slides.length
     for slide in $slides
@@ -190,17 +191,28 @@ class SlideInitializer
       SlideInitializer.initPause(slide)
       SlideInitializer.initTypewriter(slide)
 
+  @initMouseClick: ->
+    # left click
+    $('body').click (e) ->
+      if e.which == 1
+        e.preventDefault()
+        UserInterface.nextStep()
+    # right click
+    $('body').on 'contextmenu', (e) ->
+      e.preventDefault()
+      UserInterface.prevStep()
+
   @initSlideNumber: (slide, total) ->
-    slideNum = $(slide).index()
+    slideNum = $(slide).index() - $(slide).prevAll('.slide.disabled').length
     $(slide).attr('data-slide', slideNum).attr('data-slides', total)
 
   @initIncremental: (slide) ->
     $slide = $(slide)
     if $slide.hasClass('incr-list')
-      $slide.find('ul > li:first-child').addClass('current')
-      $slide.find('ol > li:first-child').addClass('current')
-      $slide.find('ul > li:not(:first-child)').addClass('inactive')
-      $slide.find('ol > li:not(:first-child)').addClass('inactive')
+      $slide.find('> div > ul > li:first-child').addClass('current')
+      $slide.find('> div > ol > li:first-child').addClass('current')
+      $slide.find('> div > ul > li:not(:first-child)').addClass('inactive')
+      $slide.find('> div > ol > li:not(:first-child)').addClass('inactive')
     if $slide.hasClass('incr-code')
       $slide.find('pre > code:first-child').addClass('current')
       $slide.find('pre > code:not(:first-child)').addClass('inactive')
@@ -221,6 +233,15 @@ class SlideInitializer
   @initTypewriter: (slide) ->
     if $(slide).hasClass('typewriter')
       $(slide).find('pre[data-lang=sh] code').addClass('inactive')
+
+  #TODO: Remove useless code
+  @initBodyClasses: ->
+    $.each @bodyClasses, (klass) ->
+      $('body').addClass(klass.split('=')[0])
+
+  #TODO: Remove useless code
+  @bodyClasses: ->
+    window.location.search.replace(/^\?/, '').split('&')
 
 class Slide
   constructor: (slideNumber) ->
