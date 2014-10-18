@@ -19,7 +19,7 @@
       <h1><%= meta.title %></h1>
     </header>
     <% sections.each do |section| %>
-      <% if section.number > 0 %>
+      <% if section.show_chapter %>
         <div id="slide-<%= section.number %>-0" data-section="<%= section.number %>" data-sections="<%= sections.length %>" class="slide chapter">
           <div>
             <hgroup>
@@ -27,6 +27,8 @@
             </hgroup>
           </div>
         </div>
+      <% end %>
+      <% if section.show_toc %>
         <div id="slide-<%= section.number %>-1" data-section="<%= section.number %>" data-sections="<%= sections.length %>" class="slide toc">
           <div>
             <hgroup>
@@ -65,7 +67,7 @@
         </div>
       <% end %>
     <% end %>
-	<div class="progress"><div></div></div>
+  <div class="progress"><div></div></div>
     <script src="js/script.js"></script>
     <% meta.js.each do |js| %>
       <script src="<%= js %>"></script>
