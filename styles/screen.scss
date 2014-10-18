@@ -33,7 +33,8 @@
 }
 
 body {
-  font:24px/2 'Open Sans', sans-serif;
+  font:30px/2 'Open Sans', sans-serif;
+  counter-reset: problem 0;
 }
 a {
   text-decoration:none;
@@ -94,7 +95,7 @@ a {
     top:0;
     left:0;
     overflow:hidden;
-    padding:$top $right 0 $left;
+    padding:$top $right $bottom $left;
     width:$width - $left - $right;
     height:$height - $top - $bottom;
   }
@@ -144,13 +145,13 @@ a {
     min-height: 20px;
     h1 {
       float: right;
-      font:28px/1 'Open Sans', sans-serif;
+      font:30px/1 'Open Sans', sans-serif;
       font-weight: lighter;
       text-transform: uppercase;
       color: lighten($color, 60%);
     }
     h2 {
-      font:38px/1 'Open Sans', sans-serif;
+      font:44px/1 'Open Sans', sans-serif;
       font-weight: lighter;
     }
   }
@@ -259,6 +260,15 @@ a {
     }
     li {
       text-indent:-2em;
+      &.divider {
+        border-bottom: 1px solid;
+        height: 0;
+        margin: 0.2em 0;
+        // opacity: 0.7;
+        &:before {
+          content: '';
+        }
+      }
       &:before {
         display:inline-block;
         width:2em;
@@ -294,13 +304,13 @@ a {
     dt {
       font-weight: bolder;
       float: left;
-      width: 140px;
+      width: 180px;
       clear: left;
       text-align: right;
       margin-right: 10px;
     }
     dd {
-      margin-left: 160px;
+      margin-left: 200px;
     }
   }
   &.small {
@@ -311,7 +321,7 @@ a {
       font-size: 19px;
       min-height: 23px;
       code {
-        line-height:1.3;
+        line-height:1.3em;
         &:before {
           line-height: 1.6em;
         }
@@ -325,7 +335,7 @@ a {
     counter-reset:code;
     background-color: $colorCode;
     white-space:normal;
-    font-size: 22px;
+    font-size: 26px;
     padding: 0px 5px;
     padding-left: $left;
     min-height: 33px; // one line
@@ -346,8 +356,11 @@ a {
         counter-increment:code;
         content:counter(code, decimal-leading-zero);
       }
-      &:only-child:before {
-        content:'';
+      &:only-child {
+        font-size: 30px;
+        &:before {
+          content:'';
+        }
       }
     }
     &:after {
@@ -367,6 +380,9 @@ a {
   }
   // Table
   table {
+    left: 50%;
+    position: relative;
+    -webkit-transform: translateX(-50%);
     margin:0 0 28px;
     width:100%;
     border-collapse:collapse;
@@ -390,7 +406,8 @@ a {
     position: absolute;
     left: 50%;
     -webkit-transform: translateX(-50%);
-    max-height: 440px;
+    // max-height: 440px;
+    max-height: 580px;
     max-width: 850px;
 
     &.inline {
@@ -421,6 +438,14 @@ a {
     h2 {
       //color: white;
       border: none;
+    }
+    code {
+      color: white;
+      font-size: 0.8em;
+      padding: 20px;
+      background-color: rgba(#000, 0.3);
+      box-shadow: inset 0 0 10px rgba(#000, 0.33);
+      text-shadow: 0 0 10px rgba(#000, 0.33);
     }
     footer {
       display: none;
@@ -535,8 +560,7 @@ a {
       display: none;
     }
   }
-  // Shout
-  &.shout {
+  &.huge {
     background:$color;
     hgroup {
       position: initial;
@@ -545,6 +569,10 @@ a {
     h1 {
       visibility: hidden;
     }
+  }
+  // Shout
+  &.shout {
+    @extend .huge;
     h2 {
       position:absolute;
       top:50%;
@@ -575,6 +603,7 @@ a {
       padding: 20px;
       font-family: 'Open Sans';
       font-weight: lighter;
+      text-shadow: 0px 0px 5px rgba(#000, 0.2);
     }
   }
   &.chapter {
@@ -594,14 +623,58 @@ a {
   }
   &.chapter-html {
     @extend .shout;
+    p {
+      font-size: 4.5em;
+      text-align: left;
+      left: 10%;
+    }
+    .tag {
+      top: 3.2em;
+      font-size: 3em;
+      opacity: 0.3;
+      text-shadow: none;
+      text-transform: lowercase;
+    }
+    .title {
+      top: 3em;
+    }
+  }
+  &.problem-solution {
+    @extend .shout;
     h2 {
       left: 0;
       right: 0;
       text-align: center;
       text-transform: uppercase;
-      font-size: 4.5em;
-      letter-spacing: -4px;
+      top: 33%;
+      font-size: 2.8em;
+      opacity: 0.5;
+      letter-spacing: 0.1em;
+      font-style: italic;
+      &:before {
+        content: '#'counter(problem);
+        font-weight: 700;
+        margin-right: 0.5em;
+      }
     }
+    .solution {
+      position: absolute;
+      padding: 100% 0;
+      background-color: $bluegreenDark;
+    }
+  }
+  &.problem {
+    @extend .problem-solution;
+    @extend .bg-red;
+    h2 {
+      &:before {
+        counter-increment: problem;
+      }
+    }
+  }
+  &.solution {
+    @extend .problem-solution;
+    @extend .bg-bluegreen;
   }
   &.section {
     @extend .cover;
@@ -614,10 +687,38 @@ a {
       background-color: rgba($color, 0.8);
     }
   }
+  &.img-place-middle {
+    img {
+      @extend .place;
+      margin-top: 50px;
+    }
+  }
   .col2 {
+    position: relative;
     -webkit-columns: 2;
     li {
-      text-indent: 0em;
+      margin-left: 2em;
+      text-indent: -2em;
+    }
+  }
+  .col3 {
+    position: relative;
+    -webkit-columns: 3;
+    li {
+      margin-left: 2em;
+      text-indent: -2em;
+    }
+  }
+  .col4 {
+    position: relative;
+    -webkit-columns: 4;
+    li {
+      margin-left: 2em;
+      text-indent: -2em;
+    }
+    img {
+      position: initial;
+      -webkit-transform: none;
     }
   }
   // Place
@@ -683,7 +784,7 @@ a {
   }
 
   dl {
-    font: 100 23px/1.6 'Open Sans', sans-serif;
+    font: 100 30px/1.6 'Open Sans', sans-serif;
   }
 
   > div {
@@ -707,7 +808,7 @@ a {
       text-transform: none;
       color: white;
       float: none;
-      font: 300 50px/1.2 'PT Sans Narrow',sans-serif;
+      font: 300 59px/1.3 'PT Sans Narrow',sans-serif;
       visibility: visible;
       display: block;
       position: relative;
@@ -717,9 +818,9 @@ a {
   }
 
   p {
-    font: 27px/1.6 'Open Sans', sans-serif;
+    font: 30px/1.6 'Open Sans', sans-serif;
     color: $grayDark;
-    margin: 20px 0;
+    margin: 30px 0;
 
     &.date {
       font-family: 'Open Sans', sans-serif;

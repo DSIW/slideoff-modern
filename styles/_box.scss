@@ -6,10 +6,10 @@
   div {
     margin: 0;
     padding: 1px 15px;
-    font-size: 22px;
+    font-size: 26px;
     background-color: $grayLight;
     &.box-header {
-      font-size: 24px;
+      font-size: 30px;
       background-color: $grayDark;
       &:not(:first-child) {
         text-indent: 0.5em;
@@ -35,11 +35,19 @@
     li {
       color: white;
       text-indent: 0em;
+      margin-left: 0;
       background-color: $grayLight;
       &:before {
         color: white;
       }
     }
+  }
+
+  code {
+    color: white;
+    background-color: rgba(#000, 0.33);
+    padding: 0px 0.3em;
+    font-size: 1.1em;
   }
 }
 

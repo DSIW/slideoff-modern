@@ -4,13 +4,13 @@
 
 // Layout
 $width:1024px;  // Slide width, permanent in most cases
-$height:640px;  // Slide height, 640px for 16:10, 768px for 4:3
+$height:768px;  // Slide height, 640px for 16:10, 768px for 4:3
+$ratio:'4x3'; // Available options: '16x10' or '4x3'
 $top:60px;     // Top padding above slide content
 $left:78px;    // Left slide content padding
 $right:96px;    // Right slide content padding
 $bottom:38px;    // Bottom slide content padding
 $break:1180px;  // Window width for small thumbnails to appear
-$ratio:'16x10'; // Available options: '16x10' or '4x3'
 
 // Colors
 
