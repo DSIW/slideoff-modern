@@ -213,7 +213,7 @@ a {
         color: white;
       }
     }
-    @each $color in bluegreen blue green purple orange gray {
+    @each $color in "blue" "bluegreen" "gray" "red" "green" "orange" "purple" {
       @include background($color);
     }
     &.success { @include background(green); }
