@@ -99,7 +99,7 @@
     &.cover,
     &.shout {
       &:after {
-        content:counter(slide) '/' attr(data-slides);
+        content:attr(data-slide) '/' attr(data-slides);
       }
     }
     &.disabled {
