@@ -1,0 +1,13 @@
+@import 'defaults';
+
+// Print
+@page {
+  margin: 0;
+  size: $width $height;
+}
+
+@media print {
+  .slide {
+    page-break-after: always;
+  }
+}

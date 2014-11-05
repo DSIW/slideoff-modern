@@ -834,8 +834,3 @@ a {
   @import 'list';
   @import 'full';
 }
-// Print
-@page {
-  margin:0;
-  size:$width $height;
-}
