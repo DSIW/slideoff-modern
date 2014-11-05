@@ -693,25 +693,8 @@ a {
       margin-top: 50px;
     }
   }
-  .col2 {
+  .col {
     position: relative;
-    -webkit-columns: 2;
-    li {
-      margin-left: 2em;
-      text-indent: -2em;
-    }
-  }
-  .col3 {
-    position: relative;
-    -webkit-columns: 3;
-    li {
-      margin-left: 2em;
-      text-indent: -2em;
-    }
-  }
-  .col4 {
-    position: relative;
-    -webkit-columns: 4;
     li {
       margin-left: 2em;
       text-indent: -2em;
@@ -720,6 +703,18 @@ a {
       position: initial;
       -webkit-transform: none;
     }
+  }
+  .col2 {
+    @extend .col;
+    -webkit-columns: 2;
+  }
+  .col3 {
+    @extend .col;
+    -webkit-columns: 3;
+  }
+  .col4 {
+    @extend .col;
+    -webkit-columns: 4;
   }
   // Place
   .place {
