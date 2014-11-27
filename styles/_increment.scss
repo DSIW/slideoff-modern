@@ -1,11 +1,13 @@
 .inactive, .current {
   -webkit-transition: opacity 0.5s ease-in-out 0.0s;
+  -moz-transition: opacity 0.5s ease-in-out 0.0s;
 }
 .inactive {
   opacity: 0;
 }
 .visited {
   -webkit-transition: opacity 0.5s ease-in-out 0.3s;
+  -moz-transition: opacity 0.5s ease-in-out 0.3s;
   .hide-visited {
     display: none;
   }
@@ -28,6 +30,7 @@ li.current {
 .border-separated {
   li {
     -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
   }
   li.inactive {
     margin-left: -400px;

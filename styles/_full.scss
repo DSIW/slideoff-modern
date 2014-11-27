@@ -38,24 +38,19 @@
         }
         &:target h2 {
           opacity:1;
-          -webkit-transform:translateX(0) translateY(-50%);
           transform:translateX(0) translateY(-50%);
         }
       }
       &.right h2 {
-        -webkit-transform:translateX(-100%) translateY(-50%);
         transform:translateX(-100%) translateY(-50%);
       }
       &.left h2 {
-        -webkit-transform:translateX(100%) translateY(-50%);
         transform:translateX(100%) translateY(-50%);
       }
       &.up h2 {
-        -webkit-transform:translateX(0) translateY(100%);
         transform:translateX(0) translateY(100%);
       }
       &.down h2 {
-        -webkit-transform:translateX(0) translateY(-100%);
         transform:translateX(0) translateY(-100%);
       }
     }

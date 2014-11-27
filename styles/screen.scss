@@ -31,6 +31,12 @@
   50% {opacity: 0;}
   100% {opacity: 0;}
 }
+@keyframes blink {
+  0% {opacity: 1;}
+  49% {opacity: 1;}
+  50% {opacity: 0;}
+  100% {opacity: 0;}
+}
 
 body {
   font:30px/2 'Open Sans', sans-serif;
@@ -83,8 +89,8 @@ a {
   color:#FFF;
   text-align:center;
   -webkit-transform-origin:50% 100%;
+  -moz-transform-origin:50% 100%;
   transform-origin:50% 100%;
-  -webkit-transform:rotate(45deg) translateY(-1em);
   transform:rotate(45deg) translateY(-1em);
 }
 
@@ -199,6 +205,7 @@ a {
   }
   blink {
     -webkit-animation: blink 1.0s infinite;
+    animation: blink 1.0s infinite;
   }
   mark {
     padding-left: 5px;
@@ -382,7 +389,7 @@ a {
   table {
     left: 50%;
     position: relative;
-    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
     margin:0 0 28px;
     width:100%;
     border-collapse:collapse;
@@ -405,14 +412,14 @@ a {
   img, iframe {
     position: absolute;
     left: 50%;
-    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
     // max-height: 440px;
     max-height: 580px;
     max-width: 850px;
 
     &.inline {
       position: initial;
-      -webkit-transform: none;
+      transform: none;
     }
   }
   iframe {
@@ -534,7 +541,6 @@ a {
       @include cover {
         top:50%;
         width:100%;
-        -webkit-transform:translateY(-50%);
         transform:translateY(-50%);
       }
     }
@@ -542,7 +548,6 @@ a {
       @include cover {
         left:50%;
         height:100%;
-        -webkit-transform:translateX(-50%);
         transform:translateX(-50%);
       }
     }
@@ -550,7 +555,6 @@ a {
       @include cover {
         top:0;
         left:0;
-        -webkit-transform:none;
         transform:none;
       }
     }
@@ -579,7 +583,6 @@ a {
       left: 128px;
       color:#FFF;
       font-size:100px;
-      -webkit-transform:translateY(-50%);
       transform:translateY(-50%);
       border-bottom: none;
       z-index: 1;
@@ -594,7 +597,6 @@ a {
       right: 0;
       top: 50%;
       color: #FFF;
-      -webkit-transform:translateY(-50%);
       transform:translateY(-50%);
       font-size: 100px;
       line-height: 1em;
@@ -701,38 +703,37 @@ a {
     }
     img {
       position: initial;
-      -webkit-transform: none;
+      transform: none;
     }
   }
   .col2 {
     @extend .col;
     -webkit-columns: 2;
+    -moz-columns: 2;
   }
   .col3 {
     @extend .col;
     -webkit-columns: 3;
+    -moz-columns: 3;
   }
   .col4 {
     @extend .col;
     -webkit-columns: 4;
+    -moz-columns: 4;
   }
   // Place
   .place {
     position:absolute;
     top:50%;
     left:50%;
-    -webkit-transform:translate(-50%, -50%);
     transform:translate(-50%, -50%);
     &.t.l, &.t.r, &.b.r, &.b.l {
-      -webkit-transform:none;
       transform:none;
     }
     &.t, &.b {
-      -webkit-transform:translate(-50%, 0);
       transform:translate(-50%, 0);
     }
     &.l, &.r {
-      -webkit-transform:translate(0, -50%);
       transform:translate(0, -50%);
     }
     &.t, &.t.l, &.t.r {

@@ -24,12 +24,10 @@
     text-align:left;
     -webkit-transform-origin:0 0;
     transform-origin:0 0;
-    -webkit-transform:scale(0.5);
     transform:scale(0.5);
     @media (max-width:$break) {
       top:$height/2 + $height/4 - $gap;
       margin:($gap - ($height/2 + $height/4)) ($gap - ($width/2 + $width/4)) 0 0;
-      -webkit-transform:scale(0.25);
       transform:scale(0.25);
     }
     // Frame
@@ -44,12 +42,10 @@
       content:'';
       -webkit-transform-origin:0 0;
       transform-origin:0 0;
-      -webkit-transform:scale(2);
       transform:scale(2);
       @media (max-width:$break) {
         width:$width/4;
         height:$height/4;
-        -webkit-transform:scale(4);
         transform:scale(4);
       }
     }
@@ -62,7 +58,6 @@
         width:$width/2;
         -webkit-transform-origin:0 0;
         transform-origin:0 0;
-        -webkit-transform:scale(2);
         transform:scale(2);
       }
     }
@@ -120,7 +115,6 @@
         color: #F5F5F5;
         background: rgba(#FFF, 0.4);
         z-index: 1;
-        /* -webkit-transform: rotate(45deg); */
         text-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
         text-transform: uppercase;
       }
