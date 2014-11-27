@@ -119,13 +119,15 @@ class Transform
     @body.style.transform = transform
 
   @scale: ->
-    Transform.apply("scale(/#{@getScaleFactor()})")
+    Transform.apply("scale(#{@getScaleFactor()})")
 
   @reset: ->
     Transform.apply('none')
 
 class Mode
   @body = document.body
+  @slideModeIndicator = "full"
+  @listModeIndicator = "list"
 
   @dispatchSingleSlideMode: (e) ->
     slideId = Mode.findSlideId(e.target)
@@ -137,18 +139,18 @@ class Mode
       slide.replaceHistory()
 
   @enterSlideMode: ->
-    @body.className = "full"
+    @body.className = @slideModeIndicator
     Transform.scale()
 
   @enterListMode: ->
-    @body.className = "list"
+    @body.className = @listModeIndicator
     Transform.reset()
 
   @isListMode: ->
-    !@body.classList.contains("full")
+    !Mode.isSlideMode()
 
   @isSlideMode: ->
-    !Mode.isListMode()
+    @body.classList.contains(@slideModeIndicator)
 
   @switchToListMode: ->
     Mode.enterListMode()
@@ -161,15 +163,6 @@ class Mode
     slide = Slide.current()
     slide.pushHistory()
     slide.updateProgress()
-
-  @reload: ->
-    Slide.current() || Slide.first().goto()
-    if window.location.search.substr(1) is 'full'
-      Mode.enterSlideMode()
-      #Slide.current().updateProgress()
-    else
-      Mode.enterListMode()
-      Slide.current()?.scrollTo()
 
   # private
 
@@ -258,7 +251,10 @@ class Slide
 
   @current: ->
     id = window.location.hash.substr(1)
-    Slide.fromSlideId(id)
+    if id? && id.length > 0
+      Slide.fromSlideId(id)
+    else
+      Slide.first()
 
   nextSection: ->
     next = @nextSectionId()
@@ -389,11 +385,10 @@ class UserInterface
     Transform.scale() if Mode.isSlideMode()
 
   @init: ->
-    if Mode.isSlideMode()
-      Mode.enterSlideMode()
-      slide = Slide.current() || Slide.first()
-      slide.replaceHistory()
-      slide.updateProgress()
+    if window.location.search.substr(1) is 'full'
+      Mode.switchToSlideMode()
+    else
+      Mode.switchToListMode()
 
   @switchToListMode: (e) ->
     if Mode.isSlideMode()
@@ -422,10 +417,6 @@ $ ->
   # Event handlers
   window.addEventListener "DOMContentLoaded", ->
     UserInterface.init()
-  , false
-
-  window.addEventListener "popstate", (e) ->
-    Mode.reload()
   , false
 
   window.addEventListener "resize", (e) ->
