@@ -417,7 +417,7 @@ $ ->
     # Shortcut for alt, ctrl and meta keys
     return if e.altKey or e.ctrlKey or e.metaKey
     switch e.which
-      when 116, 13 # F5, Enter
+      when 13 # Enter
         UserInterface.switchToSlideMode(e) if Slide.current()?
       when 27 # Esc
         UserInterface.switchToListMode(e)
