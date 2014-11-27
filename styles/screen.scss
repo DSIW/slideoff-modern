@@ -476,7 +476,7 @@ a {
       width:$width;
       height:$height;
     }
-    .left-33 {
+    .border-info {
       padding: 60px 0px;
       font:38px/1 'Open Sans', sans-serif;
       font-weight: lighter;
@@ -517,6 +517,24 @@ a {
           padding: 0.5em 50px;
         }
       }
+    }
+    .left-33 {
+      @extend .border-info;
+      width: 36%;
+    }
+    .right-33 {
+      @extend .border-info;
+      width: 36%;
+      left: 64%;
+    }
+    .left-50 {
+      @extend .border-info;
+      width: 50%;
+    }
+    .right-50 {
+      @extend .border-info;
+      width: 50%;
+      left: 50%;
     }
     @mixin cover {
       img, svg, video,
@@ -610,8 +628,6 @@ a {
   }
   &.chapter {
     @extend .shout;
-    @extend .left;
-    @extend .cover;
     @extend .w;
     h2 {
       padding: 20px;
@@ -769,7 +785,7 @@ a {
   }
 }
 
-#slide-0-0 {
+.slide.title {
   color: $grayDark;
   font-size: 70px;
   font-weight: 700;
