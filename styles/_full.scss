@@ -17,7 +17,7 @@
     position:absolute;
     top:0;
     left:0;
-    margin-left:150%;
+    display: none;
     // Next
     .next {
       visibility:hidden;
@@ -27,7 +27,7 @@
     }
     // Current
     &:target {
-      margin:0;
+      display: block;
     }
     // Shout
     &.shout {
