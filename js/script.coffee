@@ -96,7 +96,6 @@ $.fn.extend
       if words.length > maxWords
         while words.length > 0
           newText = words.splice(0, maxWords).join(" ")
-          console.log
           calcSize newText
           self.append "<br>"
       else
@@ -226,15 +225,6 @@ class SlideInitializer
   @initTypewriter: (slide) ->
     if $(slide).hasClass('typewriter')
       $(slide).find('pre[data-lang=sh] code').addClass('inactive')
-
-  #TODO: Remove useless code
-  @initBodyClasses: ->
-    $.each @bodyClasses, (klass) ->
-      $('body').addClass(klass.split('=')[0])
-
-  #TODO: Remove useless code
-  @bodyClasses: ->
-    window.location.search.replace(/^\?/, '').split('&')
 
 class Slide
   constructor: (slideNumber) ->
