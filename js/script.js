@@ -96,7 +96,6 @@ $.fn.extend({
       if (words.length > maxWords) {
         while (words.length > 0) {
           newText = words.splice(0, maxWords).join(" ");
-          console.log;
           calcSize(newText);
           self.append("<br>");
         }
