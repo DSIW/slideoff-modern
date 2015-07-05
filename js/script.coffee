@@ -309,11 +309,27 @@ class Slide
     element = @firstInactiveElement()
     @html().find('.current').first().addClass('visited')
     @removePresentElement()
+
     element.removeClass('inactive')
     if element.is("pre[data-lang=sh] code")
       element.typewriter()
     else
       element.addClass('current')
+      @incrementStep()
+
+  resetStep: ->
+    currentHtml = Slide.current().html()
+    step = 0
+    while currentHtml.hasClass("step-#{step}")
+      currentHtml.removeClass("step-#{step}")
+      step = step + 1
+
+  incrementStep: ->
+    currentHtml = Slide.current().html()
+    step = 0
+    while currentHtml.hasClass("step-#{step}")
+      step = step + 1
+    currentHtml.addClass("step-#{step}")
 
   # private
 
@@ -356,6 +372,7 @@ class UserInterface
     else
       slide.html().removeClass('incr')
       slide.removePresentElement()
+      slide.resetStep()
       slide.next().goto()
 
   @prevStep: ->

@@ -440,8 +440,31 @@ Slide = (function() {
     if (element.is("pre[data-lang=sh] code")) {
       return element.typewriter();
     } else {
-      return element.addClass('current');
+      element.addClass('current');
+      return this.incrementStep();
     }
+  };
+
+  Slide.prototype.resetStep = function() {
+    var currentHtml, step, _results;
+    currentHtml = Slide.current().html();
+    step = 0;
+    _results = [];
+    while (currentHtml.hasClass("step-" + step)) {
+      currentHtml.removeClass("step-" + step);
+      _results.push(step = step + 1);
+    }
+    return _results;
+  };
+
+  Slide.prototype.incrementStep = function() {
+    var currentHtml, step;
+    currentHtml = Slide.current().html();
+    step = 0;
+    while (currentHtml.hasClass("step-" + step)) {
+      step = step + 1;
+    }
+    return currentHtml.addClass("step-" + step);
   };
 
   Slide.prototype.slideList = function() {
@@ -506,6 +529,7 @@ UserInterface = (function() {
     } else {
       slide.html().removeClass('incr');
       slide.removePresentElement();
+      slide.resetStep();
       return slide.next().goto();
     }
   };
