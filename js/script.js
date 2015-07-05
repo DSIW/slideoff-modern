@@ -142,6 +142,10 @@ Mode = (function() {
 
   Mode.body = document.body;
 
+  Mode.slideModeIndicator = "full";
+
+  Mode.listModeIndicator = "list";
+
   Mode.dispatchSingleSlideMode = function(e) {
     var presentSlideId, slide, slideId;
     slideId = Mode.findSlideId(e.target);
@@ -155,21 +159,21 @@ Mode = (function() {
   };
 
   Mode.enterSlideMode = function() {
-    this.body.className = "full";
+    this.body.className = this.slideModeIndicator;
     return Transform.scale();
   };
 
   Mode.enterListMode = function() {
-    this.body.className = "list";
+    this.body.className = this.listModeIndicator;
     return Transform.reset();
   };
 
   Mode.isListMode = function() {
-    return !this.body.classList.contains("full");
+    return !Mode.isSlideMode();
   };
 
   Mode.isSlideMode = function() {
-    return !Mode.isListMode();
+    return this.body.classList.contains(this.slideModeIndicator);
   };
 
   Mode.switchToListMode = function() {
@@ -186,17 +190,6 @@ Mode = (function() {
     slide = Slide.current();
     slide.pushHistory();
     return slide.updateProgress();
-  };
-
-  Mode.reload = function() {
-    var _ref;
-    Slide.current() || Slide.first().goto();
-    if (window.location.search.substr(1) === 'full') {
-      return Mode.enterSlideMode();
-    } else {
-      Mode.enterListMode();
-      return (_ref = Slide.current()) != null ? _ref.scrollTo() : void 0;
-    }
   };
 
   Mode.findSlideId = function(node) {
@@ -292,16 +285,6 @@ SlideInitializer = (function() {
     }
   };
 
-  SlideInitializer.initBodyClasses = function() {
-    return $.each(this.bodyClasses, function(klass) {
-      return $('body').addClass(klass.split('=')[0]);
-    });
-  };
-
-  SlideInitializer.bodyClasses = function() {
-    return window.location.search.replace(/^\?/, '').split('&');
-  };
-
   return SlideInitializer;
 
 })();
@@ -330,7 +313,11 @@ Slide = (function() {
   Slide.current = function() {
     var id;
     id = window.location.hash.substr(1);
-    return Slide.fromSlideId(id);
+    if ((id != null) && id.length > 0) {
+      return Slide.fromSlideId(id);
+    } else {
+      return Slide.first();
+    }
   };
 
   Slide.prototype.nextSection = function() {
@@ -548,12 +535,10 @@ UserInterface = (function() {
   };
 
   UserInterface.init = function() {
-    var slide;
-    if (Mode.isSlideMode()) {
-      Mode.enterSlideMode();
-      slide = Slide.current() || Slide.first();
-      slide.replaceHistory();
-      return slide.updateProgress();
+    if (window.location.search.substr(1) === 'full') {
+      return Mode.switchToSlideMode();
+    } else {
+      return Mode.switchToListMode();
     }
   };
 
@@ -601,9 +586,6 @@ $(function() {
   SlideInitializer.init();
   window.addEventListener("DOMContentLoaded", function() {
     return UserInterface.init();
-  }, false);
-  window.addEventListener("popstate", function(e) {
-    return Mode.reload();
   }, false);
   window.addEventListener("resize", function(e) {
     return UserInterface.resize();
