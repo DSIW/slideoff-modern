@@ -595,7 +595,6 @@ $(function() {
       return;
     }
     switch (e.which) {
-      case 116:
       case 13:
         if (Slide.current() != null) {
           return UserInterface.switchToSlideMode(e);
