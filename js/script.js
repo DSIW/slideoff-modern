@@ -111,10 +111,10 @@ Transform = (function() {
 
   Transform.body = document.body;
 
-  Transform.get = function() {
+  Transform.getScaleFactor = function() {
     var denominator;
     denominator = Math.max(this.body.clientWidth / window.innerWidth, this.body.clientHeight / window.innerHeight);
-    return "scale(" + (1 / denominator) + ")";
+    return 1 / denominator;
   };
 
   Transform.apply = function(transform) {
@@ -126,7 +126,7 @@ Transform = (function() {
   };
 
   Transform.scale = function() {
-    return Transform.apply(Transform.get());
+    return Transform.apply("scale(" + (this.getScaleFactor()) + ")");
   };
 
   Transform.reset = function() {
