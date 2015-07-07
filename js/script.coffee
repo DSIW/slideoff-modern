@@ -300,36 +300,41 @@ class Slide
 
   containsInactive: -> @firstInactiveElement().length > 0
 
+  containsCurrent: -> @firstCurrentElement().length > 0
+
+  containsVisited: -> @html().find('.visited').length > 0
+
   firstInactiveElement: -> @html().find('.inactive').first()
 
-  removePresentElement: -> @html().find('.current').first().removeClass('current')
+  firstCurrentElement: -> @html().find('.current').first()
 
-  nextInactive: ->
-    @html().removeClass('incr') unless @containsInactive()
+  prevInteractive: ->
+    @firstCurrentElement().removeClass('current').addClass('inactive')
+    @html().find('.visited').last().removeClass('visited').addClass('current')
+    @decrementStep() if @html().hasClass('step-0')
+
+  nextInteractive: ->
+    @firstCurrentElement().removeClass('current').addClass('visited')
+
     element = @firstInactiveElement()
-    @html().find('.current').first().addClass('visited')
-    @removePresentElement()
-
-    element.removeClass('inactive')
+    element.removeClass('inactive').addClass('current')
     if element.is("pre[data-lang=sh] code")
       element.typewriter()
     else
-      element.addClass('current')
       @incrementStep()
 
-  resetStep: ->
-    currentHtml = Slide.current().html()
-    step = 0
-    while currentHtml.hasClass("step-#{step}")
-      currentHtml.removeClass("step-#{step}")
-      step = step + 1
+  decrementStep: ->
+    max_steps = @html().find('.step').length
+    step = max_steps
+    while step >= 0 && step <= max_steps && !@html().hasClass("step-#{step}")
+      step = step - 1
+    @html().removeClass("step-#{step}")
 
   incrementStep: ->
-    currentHtml = Slide.current().html()
     step = 0
-    while currentHtml.hasClass("step-#{step}")
+    while @html().hasClass("step-#{step}")
       step = step + 1
-    currentHtml.addClass("step-#{step}")
+    @html().addClass("step-#{step}")
 
   # private
 
@@ -367,16 +372,28 @@ class UserInterface
 
   @nextStep: ->
     slide = Slide.current()
-    if Mode.isSlideMode() and slide.containsInactive()
-      slide.nextInactive()
+    if Mode.isSlideMode() and (slide.containsInactive() or slide.containsCurrent())
+      # last current
+      if !slide.containsInactive() && slide.containsCurrent()
+        slide.firstCurrentElement().removeClass('current').addClass('visited')
+        slide.next().goto()
+      else
+        slide.nextInteractive()
     else
       slide.html().removeClass('incr')
-      slide.removePresentElement()
-      slide.resetStep()
       slide.next().goto()
 
   @prevStep: ->
-    Slide.current().prev().goto()
+    slide = Slide.current()
+    if Mode.isSlideMode() and (slide.containsVisited() or slide.containsCurrent())
+      # first current
+      if !slide.containsVisited() && slide.containsCurrent()
+        slide.firstCurrentElement().removeClass('current').addClass('inactive')
+        slide.prev().goto()
+      else
+        slide.prevInteractive()
+    else
+      slide.prev().goto()
 
   @nextBigStep: ->
     Slide.current().nextSection().goto()

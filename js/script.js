@@ -420,51 +420,59 @@ Slide = (function() {
     return this.firstInactiveElement().length > 0;
   };
 
+  Slide.prototype.containsCurrent = function() {
+    return this.firstCurrentElement().length > 0;
+  };
+
+  Slide.prototype.containsVisited = function() {
+    return this.html().find('.visited').length > 0;
+  };
+
   Slide.prototype.firstInactiveElement = function() {
     return this.html().find('.inactive').first();
   };
 
-  Slide.prototype.removePresentElement = function() {
-    return this.html().find('.current').first().removeClass('current');
+  Slide.prototype.firstCurrentElement = function() {
+    return this.html().find('.current').first();
   };
 
-  Slide.prototype.nextInactive = function() {
-    var element;
-    if (!this.containsInactive()) {
-      this.html().removeClass('incr');
+  Slide.prototype.prevInteractive = function() {
+    this.firstCurrentElement().removeClass('current').addClass('inactive');
+    this.html().find('.visited').last().removeClass('visited').addClass('current');
+    if (this.html().hasClass('step-0')) {
+      return this.decrementStep();
     }
+  };
+
+  Slide.prototype.nextInteractive = function() {
+    var element;
+    this.firstCurrentElement().removeClass('current').addClass('visited');
     element = this.firstInactiveElement();
-    this.html().find('.current').first().addClass('visited');
-    this.removePresentElement();
-    element.removeClass('inactive');
+    element.removeClass('inactive').addClass('current');
     if (element.is("pre[data-lang=sh] code")) {
       return element.typewriter();
     } else {
-      element.addClass('current');
       return this.incrementStep();
     }
   };
 
-  Slide.prototype.resetStep = function() {
-    var currentHtml, step, _results;
-    currentHtml = Slide.current().html();
-    step = 0;
-    _results = [];
-    while (currentHtml.hasClass("step-" + step)) {
-      currentHtml.removeClass("step-" + step);
-      _results.push(step = step + 1);
+  Slide.prototype.decrementStep = function() {
+    var max_steps, step;
+    max_steps = this.html().find('.step').length;
+    step = max_steps;
+    while (step >= 0 && step <= max_steps && !this.html().hasClass("step-" + step)) {
+      step = step - 1;
     }
-    return _results;
+    return this.html().removeClass("step-" + step);
   };
 
   Slide.prototype.incrementStep = function() {
-    var currentHtml, step;
-    currentHtml = Slide.current().html();
+    var step;
     step = 0;
-    while (currentHtml.hasClass("step-" + step)) {
+    while (this.html().hasClass("step-" + step)) {
       step = step + 1;
     }
-    return currentHtml.addClass("step-" + step);
+    return this.html().addClass("step-" + step);
   };
 
   Slide.prototype.slideList = function() {
@@ -524,18 +532,32 @@ UserInterface = (function() {
   UserInterface.nextStep = function() {
     var slide;
     slide = Slide.current();
-    if (Mode.isSlideMode() && slide.containsInactive()) {
-      return slide.nextInactive();
+    if (Mode.isSlideMode() && (slide.containsInactive() || slide.containsCurrent())) {
+      if (!slide.containsInactive() && slide.containsCurrent()) {
+        slide.firstCurrentElement().removeClass('current').addClass('visited');
+        return slide.next().goto();
+      } else {
+        return slide.nextInteractive();
+      }
     } else {
       slide.html().removeClass('incr');
-      slide.removePresentElement();
-      slide.resetStep();
       return slide.next().goto();
     }
   };
 
   UserInterface.prevStep = function() {
-    return Slide.current().prev().goto();
+    var slide;
+    slide = Slide.current();
+    if (Mode.isSlideMode() && (slide.containsVisited() || slide.containsCurrent())) {
+      if (!slide.containsVisited() && slide.containsCurrent()) {
+        slide.firstCurrentElement().removeClass('current').addClass('inactive');
+        return slide.prev().goto();
+      } else {
+        return slide.prevInteractive();
+      }
+    } else {
+      return slide.prev().goto();
+    }
   };
 
   UserInterface.nextBigStep = function() {
