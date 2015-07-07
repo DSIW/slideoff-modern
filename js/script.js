@@ -438,6 +438,10 @@ Slide = (function() {
 
   Slide.prototype.prevInteractive = function() {
     this.firstCurrentElement().removeClass('current').addClass('inactive');
+    if (!this.containsVisited()) {
+      this.prev().goto();
+      return;
+    }
     this.html().find('.visited').last().removeClass('visited').addClass('current');
     if (this.html().hasClass('step-0')) {
       return this.decrementStep();
@@ -447,6 +451,10 @@ Slide = (function() {
   Slide.prototype.nextInteractive = function() {
     var element;
     this.firstCurrentElement().removeClass('current').addClass('visited');
+    if (!this.containsInactive()) {
+      this.next().goto();
+      return;
+    }
     element = this.firstInactiveElement();
     element.removeClass('inactive').addClass('current');
     if (element.is("pre[data-lang=sh] code")) {
@@ -531,14 +539,12 @@ UserInterface = (function() {
 
   UserInterface.nextStep = function() {
     var slide;
+    if (!Mode.isSlideMode()) {
+      return;
+    }
     slide = Slide.current();
-    if (Mode.isSlideMode() && (slide.containsInactive() || slide.containsCurrent())) {
-      if (!slide.containsInactive() && slide.containsCurrent()) {
-        slide.firstCurrentElement().removeClass('current').addClass('visited');
-        return slide.next().goto();
-      } else {
-        return slide.nextInteractive();
-      }
+    if (slide.containsInactive() || slide.containsCurrent()) {
+      return slide.nextInteractive();
     } else {
       slide.html().removeClass('incr');
       return slide.next().goto();
@@ -547,14 +553,12 @@ UserInterface = (function() {
 
   UserInterface.prevStep = function() {
     var slide;
+    if (!Mode.isSlideMode()) {
+      return;
+    }
     slide = Slide.current();
-    if (Mode.isSlideMode() && (slide.containsVisited() || slide.containsCurrent())) {
-      if (!slide.containsVisited() && slide.containsCurrent()) {
-        slide.firstCurrentElement().removeClass('current').addClass('inactive');
-        return slide.prev().goto();
-      } else {
-        return slide.prevInteractive();
-      }
+    if (slide.containsVisited() || slide.containsCurrent()) {
+      return slide.prevInteractive();
     } else {
       return slide.prev().goto();
     }

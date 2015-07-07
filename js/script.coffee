@@ -310,11 +310,20 @@ class Slide
 
   prevInteractive: ->
     @firstCurrentElement().removeClass('current').addClass('inactive')
+
+    unless @containsVisited()
+      @prev().goto()
+      return
+
     @html().find('.visited').last().removeClass('visited').addClass('current')
     @decrementStep() if @html().hasClass('step-0')
 
   nextInteractive: ->
     @firstCurrentElement().removeClass('current').addClass('visited')
+
+    unless @containsInactive()
+      @next().goto()
+      return
 
     element = @firstInactiveElement()
     element.removeClass('inactive').addClass('current')
@@ -371,27 +380,21 @@ class UserInterface
     Slide.last().goto()
 
   @nextStep: ->
+    return unless Mode.isSlideMode()
+
     slide = Slide.current()
-    if Mode.isSlideMode() and (slide.containsInactive() or slide.containsCurrent())
-      # last current
-      if !slide.containsInactive() && slide.containsCurrent()
-        slide.firstCurrentElement().removeClass('current').addClass('visited')
-        slide.next().goto()
-      else
-        slide.nextInteractive()
+    if slide.containsInactive() or slide.containsCurrent()
+      slide.nextInteractive()
     else
       slide.html().removeClass('incr')
       slide.next().goto()
 
   @prevStep: ->
+    return unless Mode.isSlideMode()
+
     slide = Slide.current()
-    if Mode.isSlideMode() and (slide.containsVisited() or slide.containsCurrent())
-      # first current
-      if !slide.containsVisited() && slide.containsCurrent()
-        slide.firstCurrentElement().removeClass('current').addClass('inactive')
-        slide.prev().goto()
-      else
-        slide.prevInteractive()
+    if slide.containsVisited() or slide.containsCurrent()
+      slide.prevInteractive()
     else
       slide.prev().goto()
 
