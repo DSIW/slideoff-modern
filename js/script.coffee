@@ -284,7 +284,9 @@ class Slide
     window.location.hash = hash
     $('body').trigger('goto.slideoff', {target: hash})
     $('body').trigger(hash+'.goto.slideoff', {target: hash})
-    @updateProgress() if Mode.isSlideMode()
+    if Mode.isSlideMode()
+      @updateProgress()
+      @html().find('.visited').last().removeClass('visited').addClass('current')
 
   scrollTo: -> window.scrollTo 0, @offsetTop()
 
@@ -311,17 +313,13 @@ class Slide
   prevInteractive: ->
     @firstCurrentElement().removeClass('current').addClass('inactive')
 
-    unless @containsVisited()
-      @prev().goto()
-      return
-
     @html().find('.visited').last().removeClass('visited').addClass('current')
     @decrementStep() if @html().hasClass('step-0')
 
   nextInteractive: ->
     @firstCurrentElement().removeClass('current').addClass('visited')
 
-    unless @containsInactive()
+    if !@containsInactive()
       @next().goto()
       return
 

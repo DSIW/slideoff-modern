@@ -387,7 +387,8 @@ Slide = (function() {
       target: hash
     });
     if (Mode.isSlideMode()) {
-      return this.updateProgress();
+      this.updateProgress();
+      return this.html().find('.visited').last().removeClass('visited').addClass('current');
     }
   };
 
@@ -438,10 +439,6 @@ Slide = (function() {
 
   Slide.prototype.prevInteractive = function() {
     this.firstCurrentElement().removeClass('current').addClass('inactive');
-    if (!this.containsVisited()) {
-      this.prev().goto();
-      return;
-    }
     this.html().find('.visited').last().removeClass('visited').addClass('current');
     if (this.html().hasClass('step-0')) {
       return this.decrementStep();
